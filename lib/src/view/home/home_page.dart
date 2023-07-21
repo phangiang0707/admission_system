@@ -4,7 +4,6 @@ import '../price/price_page.dart';
 import '../report/report_page.dart';
 import '../responvice.dart';
 import '../uniform/uniform_page.dart';
-import 'components/drawer_page.dart';
 import 'components/top_bar_contents.dart';
 
 class Home_page extends StatefulWidget {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../controller/getDetailStudent.controller.dart';
 import '../../model/getDetailStudent.model.dart';
+import 'page/list_certificate_page.dart';
 
 class Detail_Student_page extends StatefulWidget {
   const Detail_Student_page({super.key, required this.id});
@@ -105,15 +106,31 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
             borderRadius: BorderRadius.circular(10)),
         child: Column(
           children: [
-            Text(
-              "Thông tin sinh viên",
-              style: TextStyle(
-                color: Color.fromARGB(255, 0, 61, 110),
-                fontSize: 20,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w400,
-                letterSpacing: 3,
-              ),
+            Row(
+              children: [
+                Text(
+                  "Thông tin sinh viên",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 0, 61, 110),
+                    fontSize: 20,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 3,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => List_Certificate_page(
+                                studentOtd: _studentOtd)));
+                  },
+                  child: Container(
+                    child: Text("Xác nhận chứng nhận"),
+                  ),
+                )
+              ],
             ),
             SizedBox(
               height: 50,
