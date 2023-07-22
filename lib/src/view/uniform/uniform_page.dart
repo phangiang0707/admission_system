@@ -39,7 +39,7 @@ class _Uniform_pageState extends State<Uniform_page> {
                 child: Row(
                   children: [
                     Text(
-                      "Thông tin sinh viên",
+                      "Xác nhận đồng phục sinh viên",
                       style: TextStyle(
                         color: Color.fromARGB(255, 0, 61, 110),
                         fontSize: 20,

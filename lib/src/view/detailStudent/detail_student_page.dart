@@ -107,6 +107,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Thông tin sinh viên",
