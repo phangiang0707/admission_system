@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../controller/getDetailStudent.controller.dart';
-import '../../controller/getListStudent.controller.dart';
+import '../../controller/getPaymentStudent.controller.dart';
 import '../../model/getDetailStudent.model.dart';
-import '../../model/getListStudent.model.dart';
+import '../../model/getPaymentsStudent.model.dart';
 import 'component/list_payments_page.dart';
 
 class Price_page extends StatefulWidget {
@@ -14,19 +14,19 @@ class Price_page extends StatefulWidget {
 
 class _Price_pageState extends State<Price_page> {
   final TextEditingController _txtFind = TextEditingController();
-  List<GetStudentOtd>? listStudentOTD;
-  StudentController? getStudent;
   DetailStudentController? _detailStudentController;
   GetDetailStudentOtd? _studentOtd;
+  GetPaymentStudentController? _getPaymentStudentController;
+  List<GetPaymentStudentOtd>? _listGetPaymentStudentOTD;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getStudent = StudentController();
     _detailStudentController = DetailStudentController();
-    getStudent!.getStudent().then((value) {
+    _getPaymentStudentController = GetPaymentStudentController();
+    _getPaymentStudentController!.getStudent().then((value) {
       setState(() {
-        listStudentOTD = value;
+        _listGetPaymentStudentOTD = value;
       });
     });
   }
@@ -114,18 +114,10 @@ class _Price_pageState extends State<Price_page> {
                 height: 10,
               ),
               Center(
-                child: listStudentOTD == null
+                child: _listGetPaymentStudentOTD == null
                     ? SizedBox()
                     : DataTable(
                         columns: const <DataColumn>[
-                          DataColumn(
-                            label: Expanded(
-                              child: Text(
-                                'Mã học sinh',
-                                style: TextStyle(fontStyle: FontStyle.italic),
-                              ),
-                            ),
-                          ),
                           DataColumn(
                             label: Expanded(
                               child: Text(
@@ -150,32 +142,45 @@ class _Price_pageState extends State<Price_page> {
                               ),
                             ),
                           ),
+                          DataColumn(
+                            label: Expanded(
+                              child: Text(
+                                '',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                            ),
+                          ),
                         ],
-                        rows: listStudentOTD!
+                        rows: _listGetPaymentStudentOTD!
                             .map(
                               (e) => DataRow(
                                 cells: <DataCell>[
-                                  DataCell(Text(e.maHocSinh)),
-                                  DataCell(Text(e.hoTen)),
-                                  DataCell(Text(e.cccd)),
-                                  DataCell(Text(e.sdtHocSinh)),
+                                  DataCell(Text(e.student.hoTen)),
+                                  DataCell(Text(e.student.cccd)),
+                                  DataCell(Text(e.student.sdtHocSinh)),
+                                  DataCell(IconButton(
+                                    onPressed: () {
+                                      _detailStudentController!
+                                          .getStudent(e.student.id)
+                                          .then((value) {
+                                        setState(() {
+                                          _studentOtd = value;
+                                        });
+                                        _studentOtd == null
+                                            ? CircularProgressIndicator()
+                                            : Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        List_Payments_page(
+                                                          studentOtd:
+                                                              _studentOtd,
+                                                        )));
+                                      });
+                                    },
+                                    icon: Icon(Icons.skip_next),
+                                  )),
                                 ],
-                                onLongPress: () {
-                                  _detailStudentController!
-                                      .getStudent(e.id)
-                                      .then((value) {
-                                    setState(() {
-                                      _studentOtd = value;
-                                    });
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                List_Payments_page(
-                                                  studentOtd: _studentOtd,
-                                                )));
-                                  });
-                                },
                               ),
                             )
                             .toList(),

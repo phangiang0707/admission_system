@@ -42,7 +42,7 @@ class GetDetailStudentOtd {
   String ghiChu;
   bool daNhapHoc;
   dynamic ngayNhapHoc;
-  List<ChungChi> chungChi;
+  List<ChungChi1> chungChi;
   bool mienHocPhi;
   DateTime createdAt;
   DateTime updatedAt;
@@ -122,8 +122,8 @@ class GetDetailStudentOtd {
         ghiChu: json["ghi_chu"],
         daNhapHoc: json["da_nhap_hoc"],
         ngayNhapHoc: json["ngay_nhap_hoc"],
-        chungChi: List<ChungChi>.from(
-            json["chung_chi"].map((x) => ChungChi.fromJson(x))),
+        chungChi: List<ChungChi1>.from(
+            json["chung_chi"].map((x) => ChungChi1.fromJson(x))),
         mienHocPhi: json["mien_hoc_phi"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
@@ -172,20 +172,20 @@ class GetDetailStudentOtd {
       };
 }
 
-class ChungChi {
+class ChungChi1 {
   String id;
   String noiDung;
   bool checked;
   DateTime checkedAt;
 
-  ChungChi({
+  ChungChi1({
     required this.id,
     required this.noiDung,
     required this.checked,
     required this.checkedAt,
   });
 
-  factory ChungChi.fromJson(Map<String, dynamic> json) => ChungChi(
+  factory ChungChi1.fromJson(Map<String, dynamic> json) => ChungChi1(
         id: json["id"],
         noiDung: json["noi_dung"],
         checked: json["checked"],

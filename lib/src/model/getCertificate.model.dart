@@ -20,6 +20,7 @@ class GetCertificateOtd {
   DateTime createdAt;
   DateTime updatedAt;
   String id;
+  bool checked;
 
   GetCertificateOtd({
     required this.noiDung,
@@ -30,6 +31,7 @@ class GetCertificateOtd {
     required this.createdAt,
     required this.updatedAt,
     required this.id,
+    required this.checked,
   });
 
   factory GetCertificateOtd.fromJson(Map<String, dynamic> json) =>
@@ -43,6 +45,7 @@ class GetCertificateOtd {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         id: json["id"],
+        checked: json["checked"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,6 +58,7 @@ class GetCertificateOtd {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "id": id,
+        "checked": checked,
       };
 }
 

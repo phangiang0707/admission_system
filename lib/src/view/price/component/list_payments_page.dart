@@ -13,7 +13,7 @@ class List_Payments_page extends StatefulWidget {
 }
 
 class _List_Payments_pageState extends State<List_Payments_page> {
-  List<GetPaymentsOtd> _getPaymentsOtd = [];
+  List<GetPaymentsOtd>? _getPaymentsOtd;
   PaymentsController? _paymentsController;
   @override
   void initState() {
@@ -30,111 +30,113 @@ class _List_Payments_pageState extends State<List_Payments_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        // height: double.infinity,
-        // width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 700,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Danh sách học phí",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 0, 61, 110),
-                        fontSize: 20,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 3,
-                      ),
-                    ),
-                    Container(
+      body: _getPaymentsOtd == []
+          ? CircularProgressIndicator()
+          : Container(
+              // // height: double.infinity,
+              // // width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 700,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Print_Payments_page(
-                                    getPaymentsOtd: _getPaymentsOtd,
-                                    studentOtd: widget.studentOtd,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Icon(
-                              Icons.print,
-                              color: Color.fromRGBO(23, 161, 250, 1),
+                          Text(
+                            "Danh sách học phí",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 0, 61, 110),
+                              fontSize: 20,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 3,
                             ),
                           ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(23, 161, 250, 1),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.white),
-                                  boxShadow: [
-                                    BoxShadow(
+                          Container(
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Print_Payments_page(
+                                          getPaymentsOtd: _getPaymentsOtd!,
+                                          studentOtd: widget.studentOtd,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Icon(
+                                    Icons.print,
+                                    color: Color.fromRGBO(23, 161, 250, 1),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    decoration: BoxDecoration(
                                         color: Color.fromRGBO(23, 161, 250, 1),
-                                        blurRadius: 1,
-                                        spreadRadius: 2)
-                                  ]),
-                              child: Text(
-                                "Xách nhận học phí",
-                                style: TextStyle(color: Colors.white),
-                              ),
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: Colors.white),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1),
+                                              blurRadius: 1,
+                                              spreadRadius: 2)
+                                        ]),
+                                    child: Text(
+                                      "Xách nhận học phí",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           )
                         ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 50,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Mã HSSV: ",
-                        ),
-                        Text(
-                          widget.studentOtd!.maHocSinh,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Tên HSSV: ",
-                        ),
-                        Text(
-                          widget.studentOtd!.hoTen,
-                        ),
-                      ],
-                    ),
-                    _getPaymentsOtd == []
-                        ? CircularProgressIndicator()
-                        : DataTable(
-                            columns: [
+                  ),
+                  Center(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Mã HSSV: ",
+                              ),
+                              Text(
+                                widget.studentOtd!.maHocSinh,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                "Tên HSSV: ",
+                              ),
+                              Text(
+                                widget.studentOtd!.hoTen,
+                              ),
+                            ],
+                          ),
+                          DataTable(
+                              columns: [
                                 DataColumn(
                                     label: Expanded(
                                   child: Text("Học phí"),
@@ -144,31 +146,31 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                                   child: Text(""),
                                 ))
                               ],
-                            rows: _getPaymentsOtd
-                                .map((e) => DataRow(cells: <DataCell>[
-                                      DataCell(Text(
-                                        e.name,
-                                        style: TextStyle(fontSize: 24),
-                                      )),
-                                      DataCell(Checkbox(
-                                        checkColor: Colors.white,
-                                        //fillColor: MaterialStateProperty.resolveWith(getColor),
-                                        value: e.delivered,
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            e.delivered = value!;
-                                          });
-                                        },
-                                      )),
-                                    ]))
-                                .toList())
-                  ],
-                ),
+                              rows: _getPaymentsOtd!
+                                  .map((e) => DataRow(cells: <DataCell>[
+                                        DataCell(Text(
+                                          e.name,
+                                          style: TextStyle(fontSize: 24),
+                                        )),
+                                        DataCell(Checkbox(
+                                          checkColor: Colors.white,
+                                          //fillColor: MaterialStateProperty.resolveWith(getColor),
+                                          value: e.delivered,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              e.delivered = value!;
+                                            });
+                                          },
+                                        )),
+                                      ]))
+                                  .toList())
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
-      ),
+            ),
     );
   }
 }

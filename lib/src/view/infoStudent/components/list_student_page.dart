@@ -120,6 +120,14 @@ class _List_Student_pageState extends State<List_Student_page> {
                   ),
                 ),
               ),
+              DataColumn(
+                label: Expanded(
+                  child: Text(
+                    '',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ),
             ],
             rows: widget.listStudentOTD!
                 .map(
@@ -129,16 +137,20 @@ class _List_Student_pageState extends State<List_Student_page> {
                       DataCell(Text(e.hoTen)),
                       DataCell(Text(e.cccd)),
                       DataCell(Text(e.sdtHocSinh)),
+                      DataCell(IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Detail_Student_page(
+                                          id: e.id,
+                                        )));
+                          },
+                          icon: Icon(
+                            Icons.skip_next,
+                            color: Color.fromRGBO(23, 161, 250, 1),
+                          ))),
                     ],
-                    onLongPress: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Detail_Student_page(
-                                    id: e.id,
-                                  )));
-                      // Navigator.pushNamed(context, '/detailStudent/${e.id}');
-                    },
                   ),
                 )
                 .toList(),

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../controller/getListCertificate.controller.dart';
+import '../../../controller/postCertificate.controller.dart';
+import '../../../controller/postConfirm.controller.dart';
 import '../../../model/getCertificate.model.dart';
 import '../../../model/getDetailStudent.model.dart';
-
-class Certificates {
-  List<GetCertificateOtd>? _listOfCertificates;
-  bool checkBox = false;
-}
+import '../../../model/postCertificate.model.dart';
 
 class List_Certificate_page extends StatefulWidget {
   const List_Certificate_page({super.key, required this.studentOtd});
@@ -18,17 +16,29 @@ class List_Certificate_page extends StatefulWidget {
 
 class _List_Certificate_pageState extends State<List_Certificate_page> {
   CertificateController? _certificateController;
-  List<GetCertificateOtd>? _listOfCertificates;
-  List<Certificates> _listCertificates = [];
+  List<GetCertificateOtd> _listOfCertificates = [];
+  List<GetCertificateOtd> listOfCertificates = [];
+  PostCertificateController? _postCertificateController;
+  PostConfirmController? _postConfirmController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _postCertificateController = PostCertificateController();
     _certificateController = CertificateController();
     _certificateController!.getCertificate().then((value) {
       setState(() {
-        setState(() {
-          _listOfCertificates = value;
+        listOfCertificates = value;
+        listOfCertificates.forEach((element) {
+          element.trinhDo.forEach((trinhdo) {
+            print(
+                "--------------------------------------${trinhdo.name}------------------------------------");
+            print(
+                "--------------------------------------${widget.studentOtd!.trinhDo}");
+            if (trinhdo.name == widget.studentOtd!.trinhDo) {
+              _listOfCertificates.add(element);
+            }
+          });
         });
       });
     });
@@ -61,7 +71,38 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        _listOfCertificates.forEach((element) {
+                          if (element.checked == true) {
+                            List<ChungChi> _listOfChungChi = [
+                              ChungChi(id: element.id, checked: element.checked)
+                            ];
+                            _postCertificateController!
+                                .postCertificateController(PostCertificateOtd(
+                                    studentId: widget.studentOtd!.id,
+                                    chungChi: _listOfChungChi));
+                          }
+                        });
+                        widget.studentOtd!.daNhapHoc == true
+                            ? Navigator.of(context).pop()
+                            : _showMyDialog();
+                        // AlertDialog(
+                        //   title: const Text('Xác nhận nhập học'),
+                        //   actions: <Widget>[
+                        //     TextButton(
+                        //       child: const Text('Xác nhận'),
+                        //       onPressed: () {
+                        //         _postConfirmController!
+                        //             .postConfirmController(
+                        //                 widget.studentOtd!.id)
+                        //             .then((value) {
+                        //           Navigator.of(context).pop();
+                        //         });
+                        //       },
+                        //     ),
+                        //   ],
+                        // );
+                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -112,61 +153,37 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                         ),
                       ],
                     ),
-                    DataTable(columns: [
-                      DataColumn(
-                          label: Expanded(
-                        child: Text("Tên chứng chỉ"),
-                      )),
-                      DataColumn(
-                          label: Expanded(
-                        child: Text("Tình trạng"),
-                      ))
-                    ], rows: [
-                      DataRow(cells: [
-                        DataCell(Text("Nội dung chứng chỉ")),
-                        DataCell(Checkbox(
-                          checkColor: Colors.white,
-                          //fillColor: MaterialStateProperty.resolveWith(getColor),
-                          value: true,
-                          onChanged: (bool? value) {
-                            // setState(() {
-                            //   e.delivered = value!;
-                            // });
-                          },
-                        )),
-                      ])
-                    ])
-                    // _listOfCertificates == []
-                    //     ? CircularProgressIndicator()
-                    //     : DataTable(
-                    //         columns: [
-                    //             DataColumn(
-                    //                 label: Expanded(
-                    //               child: Text("Học phí"),
-                    //             )),
-                    //             DataColumn(
-                    //                 label: Expanded(
-                    //               child: Text(""),
-                    //             ))
-                    //           ],
-                    //         rows: _listOfCertificates!
-                    //             .map((e) => DataRow(cells: <DataCell>[
-                    //                   DataCell(Text(
-                    //                     e.noiDung,
-                    //                     style: TextStyle(fontSize: 24),
-                    //                   )),
-                    //                   DataCell(Checkbox(
-                    //                     checkColor: Colors.white,
-                    //                     //fillColor: MaterialStateProperty.resolveWith(getColor),
-                    //                     value: e.delivered,
-                    //                     onChanged: (bool? value) {
-                    //                       setState(() {
-                    //                         e.delivered = value!;
-                    //                       });
-                    //                     },
-                    //                   )),
-                    //                 ]))
-                    //             .toList())
+                    _listOfCertificates == []
+                        ? CircularProgressIndicator()
+                        : DataTable(
+                            columns: [
+                                DataColumn(
+                                    label: Expanded(
+                                  child: Text("Tên chứng chỉ"),
+                                )),
+                                DataColumn(
+                                    label: Expanded(
+                                  child: Text("Tình trạng"),
+                                ))
+                              ],
+                            rows: _listOfCertificates
+                                .map((e) => DataRow(cells: <DataCell>[
+                                      DataCell(Text(
+                                        e.noiDung,
+                                        style: TextStyle(fontSize: 24),
+                                      )),
+                                      DataCell(Checkbox(
+                                        checkColor: Colors.white,
+                                        //fillColor: MaterialStateProperty.resolveWith(getColor),
+                                        value: e.checked,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            e.checked = value!;
+                                          });
+                                        },
+                                      )),
+                                    ]))
+                                .toList())
                   ],
                 ),
               ),
@@ -174,6 +191,30 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Xác nhận nhập học'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Xác nhận'),
+              onPressed: () {
+                _postConfirmController!
+                    .postConfirmController(widget.studentOtd!.id)
+                    .then((value) {
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
