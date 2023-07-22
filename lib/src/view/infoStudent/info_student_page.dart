@@ -13,6 +13,7 @@ class Info_Student_page extends StatefulWidget {
 class _Info_Student_pageState extends State<Info_Student_page> {
   final TextEditingController _txtFind = TextEditingController();
   List<GetStudentOtd>? listStudentOTD;
+  List<GetStudentOtd>? _listStudentOTD;
   StudentController? getStudent;
   @override
   void initState() {
@@ -23,6 +24,7 @@ class _Info_Student_pageState extends State<Info_Student_page> {
     getStudent!.getStudent().then((value) {
       setState(() {
         listStudentOTD = value;
+        _listStudentOTD = listStudentOTD;
       });
     });
   }
@@ -56,6 +58,15 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                       flex: 5,
                       child: TextFormField(
                         controller: _txtFind,
+                        onChanged: (value) {
+                          value = value.toLowerCase();
+                          setState(() {
+                            _listStudentOTD = listStudentOTD!.where((element) {
+                              var postitle = element.cccd.toLowerCase();
+                              return postitle.contains(value);
+                            }).toList();
+                          });
+                        },
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
@@ -111,7 +122,7 @@ class _Info_Student_pageState extends State<Info_Student_page> {
               ),
               Center(
                   child: List_Student_page(
-                listStudentOTD: listStudentOTD,
+                listStudentOTD: _listStudentOTD,
               ))
               // ResponsiveWidget.isSmallScreen(context)
               //     ? Column(

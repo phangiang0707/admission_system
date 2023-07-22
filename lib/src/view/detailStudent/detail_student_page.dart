@@ -93,863 +93,1183 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Color.fromRGBO(23, 161, 250, 1),
-                  blurRadius: 1,
-                  spreadRadius: 2)
-            ],
-            borderRadius: BorderRadius.circular(10)),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Thông tin sinh viên",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 0, 61, 110),
-                    fontSize: 20,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 3,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => List_Certificate_page(
-                                studentOtd: _studentOtd)));
-                  },
-                  child: Container(
-                    child: Text("Xác nhận chứng nhận"),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            //----------------------------Họ - Tên - Mã HSSV-----------------
             Container(
-                child: Column(
-              children: [
-                Container(
-                  child: Row(
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Họ: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtSurname,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "Giang",
-                          ),
+                      Text(
+                        "Thông tin sinh viên",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 61, 110),
+                          fontSize: 20,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 3,
                         ),
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Tên: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtName,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => List_Certificate_page(
+                                      studentOtd: _studentOtd)));
+                        },
+                        child: Container(
+                          child: Text("Xác nhận chứng nhận"),
                         ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Mã HSSV: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtCode,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
+                      )
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //--------------------------------Giới tính - Ngày sinh - Nơi sinh - Quê quán --------------------
-                Container(
-                  child: Row(
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                      child: Column(
                     children: [
-                      Text("Giới tính: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtGender,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Họ: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtSurname,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "Giang",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
+                            SizedBox(
+                              width: 20,
                             ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Tên: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtName,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        height: 20,
                       ),
-                      Text("Ngày sinh: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtBirthday,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Mã HSSV: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtCode,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
+                            SizedBox(
+                              width: 20,
                             ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Giới tính: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtGender,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        height: 20,
                       ),
-                      Text("Nơi sinh: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtBirthplace,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Ngày sinh: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtBirthday,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
+                            SizedBox(
+                              width: 20,
                             ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Nơi sinh: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtBirthplace,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        height: 20,
                       ),
-                      Text("Quê quán: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtProvince,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Quê quán: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtProvince,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
+                            SizedBox(
+                              width: 20,
                             ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1,
+                                      child: Text("Địa chỉ thường trú: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtProfession,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1, child: Text("Nghề đăng ký: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtNgheDk,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Lớp: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtClass,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1, child: Text("SĐT học sinh: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtNumberPhoneStudent,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1, child: Text("SĐT liên lạc: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtNumberPhone,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Trình độ: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtLevel,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1,
+                                      child: Text("Giấy CNTN tại trường: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtCertification,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Học lực: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtAcademicAbility,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Hạnh kiểm: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtConduct,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("TK lớp 9: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtTKclass9,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1, child: Text("Năm tốt nghiệp: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtGraduationyear,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1,
+                                      child: Text("Địa chỉ liên lạc: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtContactAddress,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Dân tộc: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtNation,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Tôn giáo: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtReligion,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Đối tượng: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtObject,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Khu vực: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtArea,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("CMND: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtCMND,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Nơi cấp: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtIssuedby,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(flex: 1, child: Text("Ngày cấp: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtDateRange,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1, child: Text("Họ và tên Ba: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtFathername,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1, child: Text("Họ và tên Mẹ: ")),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextFormField(
+                                      controller: _txtMothername,
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(23, 161,
+                                                  250, 1)), //<-- SEE HERE
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                     ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //--------------------------------Địa chỉ thường trú --------------------
-                Container(
-                  child: Row(
-                    children: [
-                      Text("Địa chỉ thường trú: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtProfession,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //--------------------------------Nghề đăng ký - Lớp - SĐT HS- SĐT liên lạc--------------------
-                Container(
-                  child: Row(
-                    children: [
-                      Text("Nghề đăng ký: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtNgheDk,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Lớp: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtClass,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("SĐT học sinh: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtNumberPhoneStudent,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("SĐT liên lạc: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtNumberPhone,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //--------------------------------Trình độ - Giấy CN tốt nghiệp tại trường - Học lực- Hạnh kiểm--------------------
-                Container(
-                  child: Row(
-                    children: [
-                      Text("Trình độ: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtLevel,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Giấy CN tốt nghiệp tại trường: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtCertification,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Học lực: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtAcademicAbility,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Hạnh kiểm: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtConduct,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //--------------------------------TK lớp 9 - Năm tốt nghiệp - Địa chỉ liên lạc - Dân tộc-------------------
-                Container(
-                  child: Row(
-                    children: [
-                      Text("TK lớp 9: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtTKclass9,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Năm tốt nghiệp: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtGraduationyear,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Địa chỉ liên lạc: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtContactAddress,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Dân tộc: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtNation,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //--------------------------------Tôn giáo - Đối tượng - Khu vực - CMND - Ngày cấp-------------------
-                Container(
-                  child: Row(
-                    children: [
-                      Text("Tôn giáo: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtReligion,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Đối tượng: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtObject,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Khu vực: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtArea,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("CMND: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtCMND,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Ngày cấp: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtDateRange,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //--------------------------------Nơi cấp - Họ và tên Ba - Họ và tên Mẹ -------------------
-                Container(
-                  child: Row(
-                    children: [
-                      Text("Nơi cấp: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtIssuedby,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Họ và tên Ba: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtFathername,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Họ và tên Mẹ: "),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _txtMothername,
-                          decoration: InputDecoration(
-                            enabled: false,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(
-                                      23, 161, 250, 1)), //<-- SEE HERE
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(23, 161, 250, 1)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            border: OutlineInputBorder(),
-                            hintText: "",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ))
+                  ))
+                ],
+              ),
+            ),
           ],
         ),
       ),

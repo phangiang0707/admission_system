@@ -4,6 +4,11 @@ import '../../../controller/getListCertificate.controller.dart';
 import '../../../model/getCertificate.model.dart';
 import '../../../model/getDetailStudent.model.dart';
 
+class Certificates {
+  List<GetCertificateOtd>? _listOfCertificates;
+  bool checkBox = false;
+}
+
 class List_Certificate_page extends StatefulWidget {
   const List_Certificate_page({super.key, required this.studentOtd});
   final GetDetailStudentOtd? studentOtd;
@@ -14,6 +19,7 @@ class List_Certificate_page extends StatefulWidget {
 class _List_Certificate_pageState extends State<List_Certificate_page> {
   CertificateController? _certificateController;
   List<GetCertificateOtd>? _listOfCertificates;
+  List<Certificates> _listCertificates = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -70,7 +76,7 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                                   spreadRadius: 2)
                             ]),
                         child: Text(
-                          "Xách nhận chứng nhận",
+                          "Xác nhận chứng nhận",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
