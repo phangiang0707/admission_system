@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../controller/getListPayments.controller.dart';
+import '../../../controller/getPaymentStudent.controller.dart';
 import '../../../model/getDetailStudent.model.dart';
 import '../../../model/getListPayments.model.dart';
+import '../../../model/getPaymentStudent.model.dart';
 import 'print_payments_page.dart';
 
 class List_Payments_page extends StatefulWidget {
@@ -14,17 +16,55 @@ class List_Payments_page extends StatefulWidget {
 
 class _List_Payments_pageState extends State<List_Payments_page> {
   List<GetPaymentsOtd>? _getPaymentsOtd;
+  List<listPayment> _listPayments = [];
   PaymentsController? _paymentsController;
+  GetPaymentStudentController? _getStudentController;
+  GetPaymentStudentOtd? _getStudentOtd;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _paymentsController = PaymentsController();
+    _getStudentController = GetPaymentStudentController();
     _paymentsController!.getPayments(widget.studentOtd!.trinhDo).then((value) {
       setState(() {
         _getPaymentsOtd = value;
       });
+      _getStudentController!.getStudent(widget.studentOtd!.id).then((value) {
+        setState(() {
+          _getStudentOtd = value;
+        });
+        for (int j = 0; j < _getStudentOtd!.items.length; j++) {
+          for (int i = 0; i < _getPaymentsOtd!.length; i++) {
+            print(
+                "--------------------------------------------${_getStudentOtd!.items[j].id}");
+            print(
+                "--------------------------------------------${_getPaymentsOtd![i].id}------------------------------------");
+            if (_getStudentOtd!.items[j].id == _getPaymentsOtd![i].id) {
+              setState(() {
+                _listPayments.add(listPayment(
+                    y: j + 1,
+                    id: _getPaymentsOtd![i].id,
+                    name: _getPaymentsOtd![i].name,
+                    checked: _getStudentOtd!.items[j].checked,
+                    quantiy: _getPaymentsOtd![i].quantity,
+                    type: _getPaymentsOtd![i].type,
+                    price: _getPaymentsOtd![i].price,
+                    note: _getPaymentsOtd![i].note));
+              });
+            }
+          }
+        }
+        print(_listPayments.length);
+      });
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -65,7 +105,7 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             Print_Payments_page(
-                                          getPaymentsOtd: _getPaymentsOtd!,
+                                          listPayments: _listPayments,
                                           studentOtd: widget.studentOtd,
                                         ),
                                       ),
@@ -118,52 +158,71 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "Mã HSSV: ",
-                              ),
-                              Text(
-                                widget.studentOtd!.maHocSinh,
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Mã HSSV: ${widget.studentOtd!.maHocSinh}",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text("CCCD: ${widget.studentOtd!.cccd}",
+                                        style: TextStyle(fontSize: 18)),
+                                  ],
+                                ),
                               ),
                               SizedBox(
                                 width: 20,
                               ),
-                              Text(
-                                "Tên HSSV: ",
-                              ),
-                              Text(
-                                widget.studentOtd!.hoTen,
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        "Số điện thoại HSSV: ${widget.studentOtd!.sdtHocSinh}",
+                                        style: TextStyle(fontSize: 18)),
+                                    Text(
+                                        "Tên HSSV: ${widget.studentOtd!.hoTen}",
+                                        style: TextStyle(fontSize: 18)),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                          DataTable(
-                              columns: [
-                                DataColumn(
-                                    label: Expanded(
-                                  child: Text("Học phí"),
-                                )),
-                                DataColumn(
-                                    label: Expanded(
-                                  child: Text(""),
-                                ))
-                              ],
-                              rows: _getPaymentsOtd!
-                                  .map((e) => DataRow(cells: <DataCell>[
-                                        DataCell(Text(
-                                          e.name,
-                                          style: TextStyle(fontSize: 24),
-                                        )),
-                                        DataCell(Checkbox(
-                                          checkColor: Colors.white,
-                                          //fillColor: MaterialStateProperty.resolveWith(getColor),
-                                          value: e.delivered,
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              e.delivered = value!;
-                                            });
-                                          },
-                                        )),
-                                      ]))
-                                  .toList())
+                          SizedBox(
+                            height: 20,
+                          ),
+                          _listPayments.length == []
+                              ? CircularProgressIndicator()
+                              : DataTable(
+                                  columns: [
+                                      DataColumn(
+                                          label: Expanded(
+                                        child: Text("Học phí"),
+                                      )),
+                                      DataColumn(
+                                          label: Expanded(
+                                        child: Text(""),
+                                      ))
+                                    ],
+                                  rows: _listPayments
+                                      .map((e) => DataRow(cells: <DataCell>[
+                                            DataCell(Text(
+                                              e.name,
+                                              style: TextStyle(fontSize: 24),
+                                            )),
+                                            DataCell(Checkbox(
+                                              checkColor: Colors.white,
+                                              //fillColor: MaterialStateProperty.resolveWith(getColor),
+                                              value: e.checked,
+                                              onChanged: (bool? value) {
+                                                setState(() {
+                                                  e.checked = value!;
+                                                });
+                                              },
+                                            )),
+                                          ]))
+                                      .toList())
                         ],
                       ),
                     ),
@@ -173,4 +232,24 @@ class _List_Payments_pageState extends State<List_Payments_page> {
             ),
     );
   }
+}
+
+class listPayment {
+  int y;
+  String id;
+  String name;
+  bool checked;
+  String quantiy;
+  String type;
+  int price;
+  String note;
+  listPayment(
+      {required this.y,
+      required this.id,
+      required this.name,
+      required this.checked,
+      required this.quantiy,
+      required this.type,
+      required this.price,
+      required this.note});
 }

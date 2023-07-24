@@ -24,6 +24,7 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _postConfirmController = PostConfirmController();
     _postCertificateController = PostCertificateController();
     _certificateController = CertificateController();
     _certificateController!.getCertificate().then((value) {
@@ -83,25 +84,46 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                                     chungChi: _listOfChungChi));
                           }
                         });
+                        // _postConfirmController!
+                        //     .postConfirmController(widget.studentOtd!.id);
+                        print(widget.studentOtd!.id);
                         widget.studentOtd!.daNhapHoc == true
                             ? Navigator.of(context).pop()
-                            : _showMyDialog();
-                        // AlertDialog(
-                        //   title: const Text('Xác nhận nhập học'),
-                        //   actions: <Widget>[
-                        //     TextButton(
-                        //       child: const Text('Xác nhận'),
-                        //       onPressed: () {
-                        //         _postConfirmController!
-                        //             .postConfirmController(
-                        //                 widget.studentOtd!.id)
-                        //             .then((value) {
-                        //           Navigator.of(context).pop();
-                        //         });
-                        //       },
-                        //     ),
-                        //   ],
-                        // );
+                            : showDialog<void>(
+                                context: context,
+                                barrierDismissible:
+                                    false, // user must tap button!
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Xác nhận nhập học'),
+                                    actions: <Widget>[
+                                      InkWell(
+                                        onTap: () {
+                                          print(widget.studentOtd!.id);
+                                          _postConfirmController!
+                                              .postConfirmController(
+                                                  widget.studentOtd!.id);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 5),
+                                          child: Text(
+                                            'Xác nhận',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                       },
                       child: Container(
                         padding:
@@ -191,30 +213,6 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
           ],
         ),
       ),
-    );
-  }
-
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Xác nhận nhập học'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Xác nhận'),
-              onPressed: () {
-                _postConfirmController!
-                    .postConfirmController(widget.studentOtd!.id)
-                    .then((value) {
-                  Navigator.of(context).pop();
-                });
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../controller/getDetailStudent.controller.dart';
-import '../../controller/getPaymentStudent.controller.dart';
+import '../../controller/getListPaymentStudent.controller.dart';
+import '../../controller/postPayment.controller.dart';
+import '../../controller/searchStudent.controller.dart';
 import '../../model/getDetailStudent.model.dart';
-import '../../model/getPaymentsStudent.model.dart';
+import '../../model/getListStudent.model.dart';
+import '../../model/getListPaymentsStudent.model.dart';
+import '../../model/getPaymentStudent.model.dart';
 import 'component/list_payments_page.dart';
 
 class Price_page extends StatefulWidget {
@@ -16,17 +20,27 @@ class _Price_pageState extends State<Price_page> {
   final TextEditingController _txtFind = TextEditingController();
   DetailStudentController? _detailStudentController;
   GetDetailStudentOtd? _studentOtd;
-  GetPaymentStudentController? _getPaymentStudentController;
-  List<GetPaymentStudentOtd>? _listGetPaymentStudentOTD;
+  GetListPaymentStudentController? _getPaymentStudentController;
+  List<GetListPaymentStudentOtd>? _listGetPaymentStudentOTD;
+  List<GetListPaymentStudentOtd>? listGetPaymentStudentOTD;
+  TextEditingController _createPaymentStudent = TextEditingController();
+  List<GetStudentOtd>? _listGetStudent;
+  SearchStudentController? _searchStudent;
+  String _txtErrorMessage = "";
+  GetPaymentStudentOtd? _getPaymentStudent;
+  PostPaymentController? _postPaymentController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _postPaymentController = PostPaymentController();
+    _searchStudent = SearchStudentController();
     _detailStudentController = DetailStudentController();
-    _getPaymentStudentController = GetPaymentStudentController();
-    _getPaymentStudentController!.getStudent().then((value) {
+    _getPaymentStudentController = GetListPaymentStudentController();
+    _getPaymentStudentController!.getListPaymentStudent().then((value) {
       setState(() {
-        _listGetPaymentStudentOTD = value;
+        listGetPaymentStudentOTD = value;
+        _listGetPaymentStudentOTD = listGetPaymentStudentOTD;
       });
     });
   }
@@ -60,6 +74,16 @@ class _Price_pageState extends State<Price_page> {
                       flex: 5,
                       child: TextFormField(
                         controller: _txtFind,
+                        onChanged: (value) {
+                          value = value.toLowerCase();
+                          setState(() {
+                            _listGetPaymentStudentOTD =
+                                listGetPaymentStudentOTD!.where((element) {
+                              var postitle = element.student.cccd.toLowerCase();
+                              return postitle.contains(value);
+                            }).toList();
+                          });
+                        },
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
@@ -107,6 +131,125 @@ class _Price_pageState extends State<Price_page> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: true, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Tạo hóa đơn học sinh'),
+                              content: TextFormField(
+                                controller: _createPaymentStudent,
+                                decoration: InputDecoration(
+                                    errorText: _txtErrorMessage.isEmpty
+                                        ? null
+                                        : _txtErrorMessage,
+                                    hintText: "Nhập CCCD"),
+                              ),
+                              actions: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                      child: const Text('Đóng'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        _searchStudent!
+                                            .searchStudent(_createPaymentStudent
+                                                .text
+                                                .toString())
+                                            .then((value) {
+                                          String id = value[0].id;
+                                          print(value.length);
+                                          if (value.isEmpty) {
+                                            print(_createPaymentStudent.text
+                                                .toString());
+                                            _txtErrorMessage =
+                                                "Không tìm thấy thông tin học sinh";
+                                            setState(() {});
+                                          } else {
+                                            print(_createPaymentStudent.text
+                                                .toString());
+                                            _postPaymentController!
+                                                .postPaymentController(id)
+                                                .then((value) {
+                                              _detailStudentController!
+                                                  .getStudent(id)
+                                                  .then((value) {
+                                                setState(() {
+                                                  _studentOtd = value;
+                                                });
+                                                _studentOtd == null
+                                                    ? CircularProgressIndicator()
+                                                    : Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                List_Payments_page(
+                                                                  studentOtd:
+                                                                      _studentOtd,
+                                                                )));
+                                              });
+                                            });
+                                            // setState(() {
+                                            //   _listGetStudent = value;
+                                            // });
+                                            //Navigator.pop(context);
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 5),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Color.fromRGBO(
+                                                  23, 161, 250, 1)),
+                                          child: Text(
+                                            "Xác nhận",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          )),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: Color.fromRGBO(23, 161, 250, 1)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(255, 226, 223, 223),
+                                  blurRadius: 1,
+                                  spreadRadius: 2)
+                            ]),
+                        child: Text(
+                          "Tạo hóa đơn",
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -178,7 +321,10 @@ class _Price_pageState extends State<Price_page> {
                                                         )));
                                       });
                                     },
-                                    icon: Icon(Icons.skip_next),
+                                    icon: Icon(
+                                      Icons.skip_next,
+                                      color: Color.fromRGBO(23, 161, 250, 1),
+                                    ),
                                   )),
                                 ],
                               ),
@@ -192,4 +338,43 @@ class _Price_pageState extends State<Price_page> {
       ),
     );
   }
+
+  // Future<void> _showMyDialog() async {
+  //   return showDialog<void>(
+  //     context: context,
+  //     barrierDismissible: false, // user must tap button!
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('Tạo học phí học sinh'),
+  //         content: TextFormField(
+  //           controller: _createPaymentStudent,
+  //           decoration: InputDecoration(
+  //               errorText: _txtErrorMessage.isEmpty ? null : _txtErrorMessage),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: const Text('Xác nhận'),
+  //             onPressed: () {
+  //               _searchStudent!
+  //                   .searchStudent(_createPaymentStudent.toString())
+  //                   .then((value) {
+  //                 print(value!.length);
+  //                 if (value.isEmpty) {
+  //                   _txtErrorMessage = "Không tìm thấy thông tin học sinh";
+  //                   setState(() {});
+  //                 } else {
+  //                   print(_createPaymentStudent.toString());
+  //                   setState(() {
+  //                     _listGetStudent = value;
+  //                   });
+  //                   Navigator.pop(context);
+  //                 }
+  //               });
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }

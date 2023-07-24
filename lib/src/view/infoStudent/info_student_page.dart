@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../controller/getListStudent.controller.dart';
 import '../../model/getListStudent.model.dart';
+import 'components/add_student_page.dart';
 import 'components/list_student_page.dart';
 
 class Info_Student_page extends StatefulWidget {
@@ -91,7 +92,12 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                       width: 20,
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Add_Student_page()));
+                      },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -107,7 +113,7 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                                   spreadRadius: 2)
                             ]),
                         child: Text(
-                          "Tìm kiếm",
+                          "Thêm học sinh",
                           style: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,

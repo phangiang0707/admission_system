@@ -1,11 +1,10 @@
-import '../model/getPaymentStudent.model.dart';
+import '../model/getListPaymentsStudent.model.dart';
 import '../utils/url.dart';
 import 'package:http/http.dart' as http;
 
-class GetPaymentStudentController {
-  Future<GetPaymentStudentOtd?> getStudent(String id) async {
-    final response =
-        await http.get(Uri.parse('${url}payments/byStudent?studentId=${id}'));
+class GetListPaymentStudentController {
+  Future<List<GetListPaymentStudentOtd>?> getListPaymentStudent() async {
+    final response = await http.get(Uri.parse('${url}payments'));
     print(response.statusCode);
     print(response.body);
     if (response.statusCode == 200) {
