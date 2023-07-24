@@ -56,7 +56,8 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
         _txtArea.text = _studentOtd!.khuVuc;
         _txtCMND.text = _studentOtd!.cccd;
         _txtIssuedby.text = _studentOtd!.noiCap;
-        _txtDateRange.text = "_studentOtd!.ngayCap";
+        _txtDateRange.text =
+            "${DateTime.parse(_studentOtd!.ngayCap).day}/${DateTime.parse(_studentOtd!.ngayCap).month}/${DateTime.parse(_studentOtd!.ngayCap).year}";
       });
     });
   }
@@ -103,6 +104,14 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.chevron_left_outlined,
+                            color: Color.fromARGB(255, 0, 61, 110),
+                          )),
                       Text(
                         "Thông tin sinh viên",
                         style: TextStyle(
@@ -141,32 +150,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                 children: [
                                   Expanded(flex: 1, child: Text("Họ: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtSurname,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtSurname,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "Giang",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtSurname,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "Giang",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -178,75 +196,46 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                 children: [
                                   Expanded(flex: 1, child: Text("Tên: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtName,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtName,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Expanded(flex: 1, child: Text("Mã HSSV: ")),
-                                  Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtCode,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
-                                      ),
-                                    ),
-                                  ),
+                                      )),
+                                  // Expanded(
+                                  //   flex: 3,
+                                  //   child: SizedBox(
+                                  //     height: 40,
+                                  //     child: TextFormField(
+                                  //       controller: _txtName,
+                                  //       decoration: InputDecoration(
+                                  //         enabled: false,
+                                  //         enabledBorder: OutlineInputBorder(
+                                  //           borderSide: const BorderSide(
+                                  //               width: 1,
+                                  //               color: Color.fromRGBO(23, 161,
+                                  //                   250, 1)), //<-- SEE HERE
+                                  //           borderRadius:
+                                  //               BorderRadius.circular(15),
+                                  //         ),
+                                  //         focusedBorder: OutlineInputBorder(
+                                  //           borderSide: const BorderSide(
+                                  //               width: 1,
+                                  //               color: Color.fromRGBO(
+                                  //                   23, 161, 250, 1)),
+                                  //           borderRadius:
+                                  //               BorderRadius.circular(15),
+                                  //         ),
+                                  //         border: OutlineInputBorder(),
+                                  //         hintText: "",
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -256,34 +245,43 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                             Expanded(
                               child: Row(
                                 children: [
-                                  Expanded(flex: 1, child: Text("Giới tính: ")),
+                                  Expanded(flex: 1, child: Text("Mã HSSV: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtGender,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtCode,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtCode,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -291,7 +289,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Container(
                         child: Row(
@@ -299,34 +297,89 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                             Expanded(
                               child: Row(
                                 children: [
+                                  Expanded(flex: 1, child: Text("Giới tính: ")),
+                                  Expanded(
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtGender,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
+                                        ),
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtGender,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
+                                      ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
                                   Expanded(flex: 1, child: Text("Ngày sinh: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtBirthday,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtBirthday,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtBirthday,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -338,32 +391,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                 children: [
                                   Expanded(flex: 1, child: Text("Nơi sinh: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtBirthplace,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtBirthplace,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtBirthplace,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -371,7 +433,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Container(
                         child: Row(
@@ -381,32 +443,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                 children: [
                                   Expanded(flex: 1, child: Text("Quê quán: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtProvince,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtProvince,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtProvince,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -420,76 +491,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                       flex: 1,
                                       child: Text("Địa chỉ thường trú: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtProfession,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtProfession,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtProfession,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      flex: 1, child: Text("Nghề đăng ký: ")),
-                                  Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtNgheDk,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -499,34 +535,44 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                             Expanded(
                               child: Row(
                                 children: [
-                                  Expanded(flex: 1, child: Text("Lớp: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtClass,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 1, child: Text("Nghề đăng ký: ")),
+                                  Expanded(
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtNgheDk,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtNgheDk,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -534,7 +580,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Container(
                         child: Row(
@@ -542,35 +588,90 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                             Expanded(
                               child: Row(
                                 children: [
+                                  Expanded(flex: 1, child: Text("Lớp: ")),
+                                  Expanded(
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtClass,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
+                                        ),
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtClass,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
+                                      ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
                                   Expanded(
                                       flex: 1, child: Text("SĐT học sinh: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtNumberPhoneStudent,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtNumberPhoneStudent,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtNumberPhoneStudent,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -583,32 +684,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                   Expanded(
                                       flex: 1, child: Text("SĐT liên lạc: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtNumberPhone,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtNumberPhone,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtNumberPhone,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -616,7 +726,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Container(
                         child: Row(
@@ -626,32 +736,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                 children: [
                                   Expanded(flex: 1, child: Text("Trình độ: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtLevel,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtLevel,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtLevel,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -665,75 +784,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                       flex: 1,
                                       child: Text("Giấy CNTN tại trường: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtCertification,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtCertification,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtCertification,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Expanded(flex: 1, child: Text("Học lực: ")),
-                                  Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtAcademicAbility,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -743,34 +828,43 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                             Expanded(
                               child: Row(
                                 children: [
-                                  Expanded(flex: 1, child: Text("Hạnh kiểm: ")),
+                                  Expanded(flex: 1, child: Text("Học lực: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtConduct,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtAcademicAbility,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtAcademicAbility,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -778,7 +872,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Container(
                         child: Row(
@@ -786,34 +880,89 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                             Expanded(
                               child: Row(
                                 children: [
+                                  Expanded(flex: 1, child: Text("Hạnh kiểm: ")),
+                                  Expanded(
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtConduct,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
+                                        ),
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtConduct,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
+                                      ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
                                   Expanded(flex: 1, child: Text("TK lớp 9: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtTKclass9,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtTKclass9,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtTKclass9,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -826,32 +975,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                   Expanded(
                                       flex: 1, child: Text("Năm tốt nghiệp: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtGraduationyear,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtGraduationyear,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtGraduationyear,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -859,7 +1017,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Container(
                         child: Row(
@@ -871,32 +1029,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                       flex: 1,
                                       child: Text("Địa chỉ liên lạc: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtContactAddress,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtContactAddress,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtContactAddress,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -908,75 +1075,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                 children: [
                                   Expanded(flex: 1, child: Text("Dân tộc: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtNation,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtNation,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtNation,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Expanded(flex: 1, child: Text("Tôn giáo: ")),
-                                  Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtReligion,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -986,34 +1119,43 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                             Expanded(
                               child: Row(
                                 children: [
-                                  Expanded(flex: 1, child: Text("Đối tượng: ")),
+                                  Expanded(flex: 1, child: Text("Tôn giáo: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtObject,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtReligion,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtReligion,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -1021,7 +1163,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Container(
                         child: Row(
@@ -1029,34 +1171,89 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                             Expanded(
                               child: Row(
                                 children: [
+                                  Expanded(flex: 1, child: Text("Đối tượng: ")),
+                                  Expanded(
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtObject,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
+                                        ),
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtObject,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
+                                      ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
                                   Expanded(flex: 1, child: Text("Khu vực: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtArea,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtArea,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtArea,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -1068,32 +1265,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                 children: [
                                   Expanded(flex: 1, child: Text("CMND: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtCMND,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtCMND,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtCMND,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -1101,7 +1307,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Container(
                         child: Row(
@@ -1111,32 +1317,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                 children: [
                                   Expanded(flex: 1, child: Text("Nơi cấp: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtIssuedby,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtIssuedby,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtIssuedby,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -1148,32 +1363,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                 children: [
                                   Expanded(flex: 1, child: Text("Ngày cấp: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtDateRange,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtDateRange,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtDateRange,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -1181,7 +1405,7 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Container(
                         child: Row(
@@ -1192,32 +1416,41 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                   Expanded(
                                       flex: 1, child: Text("Họ và tên Ba: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtFathername,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtFathername,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtFathername,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -1230,40 +1463,46 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                   Expanded(
                                       flex: 1, child: Text("Họ và tên Mẹ: ")),
                                   Expanded(
-                                    flex: 3,
-                                    child: TextFormField(
-                                      controller: _txtMothername,
-                                      decoration: InputDecoration(
-                                        enabled: false,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(23, 161,
-                                                  250, 1)), //<-- SEE HERE
-                                          borderRadius:
-                                              BorderRadius.circular(15),
+                                      flex: 4,
+                                      child: TextField(
+                                        controller: _txtMothername,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          isDense: true, // Added this
+                                          contentPadding:
+                                              EdgeInsets.all(8), // Added this
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              width: 1,
-                                              color: Color.fromRGBO(
-                                                  23, 161, 250, 1)),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        hintText: "",
+                                      )
+                                      // TextFormField(
+                                      //   controller: _txtMothername,
+                                      //   decoration: InputDecoration(
+                                      //     enabled: false,
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(23, 161,
+                                      //               250, 1)), //<-- SEE HERE
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderSide: const BorderSide(
+                                      //           width: 1,
+                                      //           color: Color.fromRGBO(
+                                      //               23, 161, 250, 1)),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(15),
+                                      //     ),
+                                      //     border: OutlineInputBorder(),
+                                      //     hintText: "",
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
                       ),
                     ],
                   ))

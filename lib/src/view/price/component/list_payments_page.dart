@@ -1,7 +1,9 @@
+import 'package:admission_system/src/model/putPaymentStudent.model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../controller/getListPayments.controller.dart';
 import '../../../controller/getPaymentStudent.controller.dart';
+import '../../../controller/putPaymentStudent.controller.dart';
 import '../../../model/getDetailStudent.model.dart';
 import '../../../model/getListPayments.model.dart';
 import '../../../model/getPaymentStudent.model.dart';
@@ -20,11 +22,14 @@ class _List_Payments_pageState extends State<List_Payments_page> {
   PaymentsController? _paymentsController;
   GetPaymentStudentController? _getStudentController;
   GetPaymentStudentOtd? _getStudentOtd;
-
+  PutPaymentStudentController? _putStudentController;
+  String? type;
+  List<Item1> items = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _putStudentController = PutPaymentStudentController();
     _paymentsController = PaymentsController();
     _getStudentController = GetPaymentStudentController();
     _paymentsController!.getPayments(widget.studentOtd!.trinhDo).then((value) {
@@ -72,161 +77,234 @@ class _List_Payments_pageState extends State<List_Payments_page> {
     return Scaffold(
       body: _getPaymentsOtd == []
           ? CircularProgressIndicator()
-          : Container(
-              // // height: double.infinity,
-              // // width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+          : SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: Container(
-                      width: 700,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Danh sách học phí",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 0, 61, 110),
-                              fontSize: 20,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 3,
-                            ),
-                          ),
-                          Container(
+                  Container(
+                    // // height: double.infinity,
+                    // // width: double.infinity,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Container(
+                            width: 700,
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            Print_Payments_page(
-                                          listPayments: _listPayments,
-                                          studentOtd: widget.studentOtd,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.print,
-                                    color: Color.fromRGBO(23, 161, 250, 1),
+                                Text(
+                                  "Danh sách học phí",
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 61, 110),
+                                    fontSize: 20,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 3,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                InkWell(
-                                  onTap: () {},
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        color: Color.fromRGBO(23, 161, 250, 1),
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: Colors.white),
-                                        boxShadow: [
-                                          BoxShadow(
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Print_Payments_page(
+                                                listPayments: _listPayments,
+                                                studentOtd: widget.studentOtd,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.print,
+                                          color:
+                                              Color.fromRGBO(23, 161, 250, 1),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          for (int i = 0;
+                                              i < _listPayments.length;
+                                              i++) {
+                                            if (_listPayments[i].checked ==
+                                                true) {
+                                              items.add(Item1(
+                                                  id: _listPayments[i].id,
+                                                  checked: true));
+                                              print(
+                                                  "-----${_getStudentOtd!.id}------${_listPayments[i].id}--------$type");
+                                            }
+                                            ;
+                                            if (i + 1 == _listPayments.length) {
+                                              _putStudentController!
+                                                  .putPaymentStudentController(
+                                                      _getStudentOtd!.id,
+                                                      PutPaymentStudentOtd(
+                                                          items: items,
+                                                          type: type!,
+                                                          note: "note"))
+                                                  .then((value) {
+                                                Navigator.pop(context);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 5),
+                                          decoration: BoxDecoration(
                                               color: Color.fromRGBO(
                                                   23, 161, 250, 1),
-                                              blurRadius: 1,
-                                              spreadRadius: 2)
-                                        ]),
-                                    child: Text(
-                                      "Xách nhận học phí",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: Colors.white),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Color.fromRGBO(
+                                                        23, 161, 250, 1),
+                                                    blurRadius: 1,
+                                                    spreadRadius: 2)
+                                              ]),
+                                          child: Text(
+                                            "Xác nhận học phí",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 )
                               ],
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Mã HSSV: ${widget.studentOtd!.maHocSinh}",
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          Text(
+                                              "CCCD: ${widget.studentOtd!.cccd}",
+                                              style: TextStyle(fontSize: 18)),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              "Số điện thoại HSSV: ${widget.studentOtd!.sdtHocSinh}",
+                                              style: TextStyle(fontSize: 18)),
+                                          Text(
+                                              "Tên HSSV: ${widget.studentOtd!.hoTen}",
+                                              style: TextStyle(fontSize: 18)),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                _listPayments.length == []
+                                    ? CircularProgressIndicator()
+                                    : DataTable(
+                                        columns: [
+                                            DataColumn(
+                                                label: Expanded(
+                                              child: Text("Học phí"),
+                                            )),
+                                            DataColumn(
+                                                label: Expanded(
+                                              child: Container(
+                                                  width: 200,
+                                                  child: DropdownButton(
+                                                    isExpanded: true,
+                                                    items: [
+                                                      DropdownMenuItem(
+                                                        child: Text(
+                                                            "Chuyển khoản"),
+                                                        value: "CHUYEN_KHOAN",
+                                                      ),
+                                                      DropdownMenuItem(
+                                                        child: Text(
+                                                            "Đóng trực tiếp"),
+                                                        value: "TRUC_TIEP",
+                                                      )
+                                                    ],
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        type = value as String?;
+                                                      });
+                                                      print("aaaaa  +$value");
+                                                    },
+                                                    value: type,
+                                                    hint: Text("Chọn kiểu"),
+                                                    alignment: Alignment.center,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                  )),
+                                            ))
+                                          ],
+                                        rows: _listPayments
+                                            .map((e) =>
+                                                DataRow(cells: <DataCell>[
+                                                  DataCell(Text(
+                                                    e.name,
+                                                    style:
+                                                        TextStyle(fontSize: 24),
+                                                  )),
+                                                  DataCell(Checkbox(
+                                                    checkColor: Colors.white,
+                                                    //fillColor: MaterialStateProperty.resolveWith(getColor),
+                                                    value: e.checked,
+                                                    onChanged: (bool? value) {
+                                                      setState(() {
+                                                        e.checked = value!;
+                                                      });
+                                                      print(
+                                                          "-----------${e.name}----------------${e.checked}");
+                                                    },
+                                                  )),
+                                                ]))
+                                            .toList())
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  Center(
-                    child: Container(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Mã HSSV: ${widget.studentOtd!.maHocSinh}",
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    Text("CCCD: ${widget.studentOtd!.cccd}",
-                                        style: TextStyle(fontSize: 18)),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        "Số điện thoại HSSV: ${widget.studentOtd!.sdtHocSinh}",
-                                        style: TextStyle(fontSize: 18)),
-                                    Text(
-                                        "Tên HSSV: ${widget.studentOtd!.hoTen}",
-                                        style: TextStyle(fontSize: 18)),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          _listPayments.length == []
-                              ? CircularProgressIndicator()
-                              : DataTable(
-                                  columns: [
-                                      DataColumn(
-                                          label: Expanded(
-                                        child: Text("Học phí"),
-                                      )),
-                                      DataColumn(
-                                          label: Expanded(
-                                        child: Text(""),
-                                      ))
-                                    ],
-                                  rows: _listPayments
-                                      .map((e) => DataRow(cells: <DataCell>[
-                                            DataCell(Text(
-                                              e.name,
-                                              style: TextStyle(fontSize: 24),
-                                            )),
-                                            DataCell(Checkbox(
-                                              checkColor: Colors.white,
-                                              //fillColor: MaterialStateProperty.resolveWith(getColor),
-                                              value: e.checked,
-                                              onChanged: (bool? value) {
-                                                setState(() {
-                                                  e.checked = value!;
-                                                });
-                                              },
-                                            )),
-                                          ]))
-                                      .toList())
-                        ],
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),

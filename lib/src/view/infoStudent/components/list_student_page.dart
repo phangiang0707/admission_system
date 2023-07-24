@@ -86,74 +86,76 @@ class _List_Student_pageState extends State<List_Student_page> {
   Widget build(BuildContext context) {
     return widget.listStudentOTD == null
         ? CircularProgressIndicator()
-        : DataTable(
-            columns: const <DataColumn>[
-              DataColumn(
-                label: Expanded(
-                  child: Text(
-                    'Mã học sinh',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+        : SingleChildScrollView(
+            child: DataTable(
+              columns: const <DataColumn>[
+                DataColumn(
+                  label: Expanded(
+                    child: Text(
+                      'Mã học sinh',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
                   ),
                 ),
-              ),
-              DataColumn(
-                label: Expanded(
-                  child: Text(
-                    'Họ và Tên',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                DataColumn(
+                  label: Expanded(
+                    child: Text(
+                      'Họ và Tên',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
                   ),
                 ),
-              ),
-              DataColumn(
-                label: Expanded(
-                  child: Text(
-                    'CCCD',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                DataColumn(
+                  label: Expanded(
+                    child: Text(
+                      'CCCD',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
                   ),
                 ),
-              ),
-              DataColumn(
-                label: Expanded(
-                  child: Text(
-                    'Số điện thoại',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                DataColumn(
+                  label: Expanded(
+                    child: Text(
+                      'Số điện thoại',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
                   ),
                 ),
-              ),
-              DataColumn(
-                label: Expanded(
-                  child: Text(
-                    '',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                DataColumn(
+                  label: Expanded(
+                    child: Text(
+                      '',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
                   ),
                 ),
-              ),
-            ],
-            rows: widget.listStudentOTD!
-                .map(
-                  (e) => DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text(e.maHocSinh)),
-                      DataCell(Text(e.hoTen)),
-                      DataCell(Text(e.cccd)),
-                      DataCell(Text(e.sdtHocSinh)),
-                      DataCell(IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Detail_Student_page(
-                                          id: e.id,
-                                        )));
-                          },
-                          icon: Icon(
-                            Icons.skip_next,
-                            color: Color.fromRGBO(23, 161, 250, 1),
-                          ))),
-                    ],
-                  ),
-                )
-                .toList(),
+              ],
+              rows: widget.listStudentOTD!
+                  .map(
+                    (e) => DataRow(
+                      cells: <DataCell>[
+                        DataCell(Text(e.maHocSinh)),
+                        DataCell(Text(e.hoTen)),
+                        DataCell(Text(e.cccd)),
+                        DataCell(Text(e.sdtHocSinh)),
+                        DataCell(IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Detail_Student_page(
+                                            id: e.id,
+                                          )));
+                            },
+                            icon: Icon(
+                              Icons.skip_next,
+                              color: Color.fromRGBO(23, 161, 250, 1),
+                            ))),
+                      ],
+                    ),
+                  )
+                  .toList(),
+            ),
           );
   }
 }
