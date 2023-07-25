@@ -1,4 +1,10 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../model/sponsorModel.dart';
+import '../../login/login_page.dart';
 
 class TopBarContents extends StatefulWidget {
   final double opacity;
@@ -42,12 +48,18 @@ class _TopBarContentsState extends State<TopBarContents> {
                     value ? _isHovering[0] = true : _isHovering[0] = false;
                   });
                 },
-                onTap: () {},
+                onTap: () {
+                  Provider.of<SponsorModel>(context, listen: false)
+                      .getLogin
+                      .isNull;
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Login_page()));
+                },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Login',
+                      'Logout',
                       style: TextStyle(
                         color: _isHovering[0]
                             ? Colors.black

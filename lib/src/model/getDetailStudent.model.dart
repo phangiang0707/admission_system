@@ -40,12 +40,12 @@ class GetDetailStudentOtd {
   String hoTenCha;
   String hoTenMe;
   String ghiChu;
-  bool daNhapHoc;
-  dynamic ngayNhapHoc;
   List<ChungChi1> chungChi;
-  bool mienHocPhi;
   DateTime createdAt;
   DateTime updatedAt;
+  bool daNhapHoc;
+  dynamic ngayNhapHoc;
+  bool mienHocPhi;
   String hoTen;
   String id;
 
@@ -74,17 +74,17 @@ class GetDetailStudentOtd {
     required this.doiTuong,
     required this.khuVuc,
     required this.cccd,
-    required this.ngayCap,
+    this.ngayCap,
     required this.noiCap,
     required this.hoTenCha,
     required this.hoTenMe,
     required this.ghiChu,
-    required this.daNhapHoc,
-    this.ngayNhapHoc,
     required this.chungChi,
-    required this.mienHocPhi,
     required this.createdAt,
     required this.updatedAt,
+    required this.daNhapHoc,
+    required this.ngayNhapHoc,
+    required this.mienHocPhi,
     required this.hoTen,
     required this.id,
   });
@@ -120,13 +120,13 @@ class GetDetailStudentOtd {
         hoTenCha: json["ho_ten_cha"],
         hoTenMe: json["ho_ten_me"],
         ghiChu: json["ghi_chu"],
-        daNhapHoc: json["da_nhap_hoc"],
-        ngayNhapHoc: json["ngay_nhap_hoc"],
         chungChi: List<ChungChi1>.from(
             json["chung_chi"].map((x) => ChungChi1.fromJson(x))),
-        mienHocPhi: json["mien_hoc_phi"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
+        daNhapHoc: json["da_nhap_hoc"],
+        ngayNhapHoc: DateTime.parse(json["ngay_nhap_hoc"]),
+        mienHocPhi: json["mien_hoc_phi"],
         hoTen: json["ho_ten"],
         id: json["id"],
       );
@@ -161,12 +161,12 @@ class GetDetailStudentOtd {
         "ho_ten_cha": hoTenCha,
         "ho_ten_me": hoTenMe,
         "ghi_chu": ghiChu,
-        "da_nhap_hoc": daNhapHoc,
-        "ngay_nhap_hoc": ngayNhapHoc,
         "chung_chi": List<dynamic>.from(chungChi.map((x) => x.toJson())),
-        "mien_hoc_phi": mienHocPhi,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
+        "da_nhap_hoc": daNhapHoc,
+        "ngay_nhap_hoc": ngayNhapHoc.toIso8601String(),
+        "mien_hoc_phi": mienHocPhi,
         "ho_ten": hoTen,
         "id": id,
       };

@@ -21,13 +21,14 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
   PostCertificateController? _postCertificateController;
   PostConfirmController? _postConfirmController;
   List<ChungChi> _listOfChungChi = [];
+  List<detailCertificate> _listOfDetailCertificates = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _postConfirmController = PostConfirmController();
-    _postCertificateController = PostCertificateController();
-    _certificateController = CertificateController();
+    _postConfirmController = PostConfirmController(context: context);
+    _postCertificateController = PostCertificateController(context: context);
+    _certificateController = CertificateController(context: context);
     _certificateController!.getCertificate().then((value) {
       setState(() {
         listOfCertificates = value;
@@ -41,6 +42,15 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
               _listOfCertificates.add(element);
             }
           });
+        });
+      });
+      _listOfCertificates.forEach((element) {
+        widget.studentOtd!.chungChi.forEach((element1) {
+          if (element1.id == element.id) {
+            setState(() {
+              element.checked = element1.checked;
+            });
+          }
         });
       });
     });
@@ -65,6 +75,14 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(
+                                Icons.chevron_left_outlined,
+                                color: Color.fromARGB(255, 0, 61, 110),
+                              )),
                           Text(
                             "Danh sách chứng nhận",
                             style: TextStyle(
@@ -231,4 +249,12 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
       ),
     );
   }
+}
+
+class detailCertificate {
+  String name;
+  String id;
+  bool checked;
+  detailCertificate(
+      {required this.name, required this.id, required this.checked});
 }

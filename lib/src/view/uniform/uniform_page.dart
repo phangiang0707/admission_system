@@ -18,7 +18,7 @@ class _Uniform_pageState extends State<Uniform_page> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getStudent = StudentController();
+    getStudent = StudentController(context: context);
     getStudent!.getStudent().then((value) {
       setState(() {
         listStudentOTD = value;

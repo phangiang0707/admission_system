@@ -28,7 +28,7 @@ class _Info_Student_pageState extends State<Info_Student_page> {
     // TODO: implement initState
     super.initState();
     //_postStudentController = PostStudentController();
-    getStudent = StudentController();
+    getStudent = StudentController(context: context);
 
     getStudent!.getStudent().then((value) {
       setState(() {
@@ -102,10 +102,10 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                                       color: Color.fromRGBO(23, 161, 250, 1)),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
-                                labelText: "Tìm kiếm",
+                                labelText: "Tìm kiếm bằng CCCD",
                                 border: InputBorder.none,
                                 //border: const OutlineInputBorder(),
-                                hintText: "Nhập số CCCD",
+                                hintText: "Tìm kiếm bằng CCCD",
                               ),
                             ),
                           ),

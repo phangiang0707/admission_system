@@ -82,8 +82,13 @@ class _Drawar_pageState extends State<Drawar_page> {
               });
             },
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Price_page()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Price_page(
+                      checkRole: "price_page",
+                    ),
+                  ));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,8 +141,13 @@ class _Drawar_pageState extends State<Drawar_page> {
               });
             },
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Uniform_page()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Price_page(
+                      checkRole: "uniform_page",
+                    ),
+                  ));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

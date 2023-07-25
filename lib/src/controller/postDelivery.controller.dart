@@ -8,17 +8,17 @@ import '../model/getPaymentStudent.model.dart';
 import '../model/sponsorModel.dart';
 import '../utils/url.dart';
 
-class PostPaymentController {
+class PostDeliveryController {
   final BuildContext context;
   SponsorModel? model;
-  PostPaymentController({required this.context}) {
+  PostDeliveryController({required this.context}) {
     model = Provider.of<SponsorModel>(context, listen: false);
   }
-
-  Future<GetPaymentStudentOtd?> postPaymentController(String id) async {
+  Future<GetPaymentStudentOtd?> postPDeliveryController(
+      String idPayment, String idItem) async {
     final response = await http.post(
-      Uri.parse('${url}payments'),
-      body: jsonEncode({"studentId": id}),
+      Uri.parse('${url}payments/delivery'),
+      body: jsonEncode({"paymentId": idPayment, "itemId": idItem}),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer ${model!.getLogin!.accessToken}",

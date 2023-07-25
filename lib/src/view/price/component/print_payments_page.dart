@@ -6,6 +6,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../../../controller/writeMoney.controller.dart';
 import '../../../model/getDetailStudent.model.dart';
 import 'list_payments_page.dart';
 
@@ -22,11 +23,20 @@ class _Print_Payments_pageState extends State<Print_Payments_page> {
   List<listPayment> _listViewsPauments = [];
   int total = 0;
   String gender = "";
+  String title = '';
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    if (widget.studentOtd!.trinhDo == "TRUNG_CAP") {
+      setState(() {
+        title = "TRUNG CẤP";
+      });
+    } else {
+      setState(() {
+        title = "CAO ĐẲNG";
+      });
+    }
     for (var i in widget.listPayments) {
       if (i.checked == true) {
         _listViewsPauments.add(i);
@@ -38,6 +48,16 @@ class _Print_Payments_pageState extends State<Print_Payments_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.chevron_left_outlined,
+              color: Color.fromARGB(255, 0, 61, 110),
+            )),
+      ),
       body: PdfPreview(
         build: (format) => _generatePdf(format),
       ),
@@ -143,12 +163,12 @@ class _Print_Payments_pageState extends State<Print_Payments_page> {
                             font: fontTimesNewRoman, fontSize: 11))),
                 pw.Expanded(
                     flex: 1,
-                    child: pw.Text("Trình độ: ${widget.studentOtd!.trinhDo}",
+                    child: pw.Text("Trình độ: $title",
                         style: pw.TextStyle(
                             font: fontTimesNewRoman, fontSize: 11)))
               ])),
               pw.SizedBox(height: 20),
-              pw.Text("THÔNG TIN HỌC PHÍ, LỆ PHÍ TRUNG CẤP",
+              pw.Text("THÔNG TIN HỌC PHÍ, LỆ PHÍ $title",
                   style: pw.TextStyle(font: fontTimesNewRoman, fontSize: 14)),
               pw.SizedBox(height: 7),
               pw.Table(
@@ -201,7 +221,8 @@ class _Print_Payments_pageState extends State<Print_Payments_page> {
                                       font: fontTimesNewRoman, fontSize: 14))
                             ]),
                             pw.Column(children: [
-                              pw.Text(e.price.toString(),
+                              pw.Text(
+                                  WriteMoney().writedMoney(e.price.toString()),
                                   style: pw.TextStyle(
                                       font: fontTimesNewRoman, fontSize: 14))
                             ]),
@@ -229,7 +250,7 @@ class _Print_Payments_pageState extends State<Print_Payments_page> {
                               font: fontTimesNewRomanBold, fontSize: 14))
                     ]),
                     pw.Column(children: [
-                      pw.Text(total.toString(),
+                      pw.Text(WriteMoney().writedMoney(total.toString()),
                           style: pw.TextStyle(
                               font: fontTimesNewRomanBold, fontSize: 14))
                     ]),

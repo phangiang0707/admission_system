@@ -18,11 +18,11 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    _studentController = DetailStudentController();
+    _studentController = DetailStudentController(context: context);
     _studentController!.getStudent(widget.id).then((value) {
       setState(() {
         print("----------------------------${value!.maHocSinh}");
+        print(value.daNhapHoc);
         _studentOtd = value;
         _txtFathername.text = value.hoTenCha;
         _txtMothername.text = value.hoTenMe;
@@ -56,12 +56,26 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
         _txtArea.text = _studentOtd!.khuVuc;
         _txtCMND.text = _studentOtd!.cccd;
         _txtIssuedby.text = _studentOtd!.noiCap;
-        _txtDateRange.text =
-            "${DateTime.parse(_studentOtd!.ngayCap).day}/${DateTime.parse(_studentOtd!.ngayCap).month}/${DateTime.parse(_studentOtd!.ngayCap).year}";
+        if (value.ngayCap == null) {
+          _txtDateRange.text = "";
+        } else {
+          _txtDateRange.text =
+              "${DateTime.parse(_studentOtd!.ngayCap).day}/${DateTime.parse(_studentOtd!.ngayCap).month}/${DateTime.parse(_studentOtd!.ngayCap).year}";
+        }
       });
+      if (_studentOtd!.daNhapHoc == true) {
+        setState(() {
+          _txtTinhTrang.text = "Tình trạng đã nhập học";
+        });
+      } else {
+        setState(() {
+          _txtTinhTrang.text = "Tình trạng chưa nhập học";
+        });
+      }
     });
   }
 
+  TextEditingController _txtTinhTrang = TextEditingController();
   TextEditingController _txtSurname = TextEditingController();
   TextEditingController _txtName = TextEditingController();
   TextEditingController _txtCode = TextEditingController();
@@ -94,18 +108,21 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  width: 1300,
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                  child: Column(
-                    children: [
-                      Row(
+      body: Container(
+        // width: double.infinity,
+        // height: double.infinity,
+        color: Color.fromRGBO(238, 239, 241, 100),
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                width: 1300,
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                child: Column(
+                  children: [
+                    Container(
+                      color: Color.fromARGB(255, 0, 61, 110),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
@@ -114,15 +131,15 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                               },
                               icon: Icon(
                                 Icons.chevron_left_outlined,
-                                color: Color.fromARGB(255, 0, 61, 110),
+                                color: Colors.white,
                               )),
                           Text(
                             "Thông tin sinh viên",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 0, 61, 110),
+                              color: Colors.white,
                               fontSize: 20,
                               fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w700,
                               letterSpacing: 3,
                             ),
                           ),
@@ -136,822 +153,929 @@ class _Detail_Student_pageState extends State<Detail_Student_page> {
                                               studentOtd: _studentOtd)));
                             },
                             child: Container(
-                              child: Text("Xác nhận chứng nhận"),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Xác nhận chứng nhận",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  )
+                                ],
+                              ),
                             ),
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Container(
-                          child: Column(
-                        children: [
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Họ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtSurname,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Tên",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtName,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Mã HSSV: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtCode,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Container(
+                        padding: EdgeInsets.all(30),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            Container(
+                                child: TextField(
+                              controller: _txtTinhTrang,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                isDense: true, // Added this
+                                contentPadding: EdgeInsets.all(8), // Added this
+                              ),
+                            )),
+                            SizedBox(
+                              height: 15,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Giới tính: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtGender,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
+                            Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Họ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtSurname,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
                                         ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Ngày sinh: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtBirthday,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
+                                        SizedBox(
+                                          width: 20,
                                         ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Nơi sinh: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtBirthplace,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Tên",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtName,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
                                         ),
-                                      )),
-                                    ],
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Mã HSSV: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtCode,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Giới tính: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtGender,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Ngày sinh: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtBirthday,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Nơi sinh: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtBirthplace,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Quê quán: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtProvince,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Địa chỉ thường trú: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtProfession,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Nghề đăng ký: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtNgheDk,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Lớp: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtClass,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "SĐT học sinh: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller:
+                                                    _txtNumberPhoneStudent,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "SĐT liên lạc: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtNumberPhone,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Trình độ: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtLevel,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Giấy CNTN tại trường: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtCertification,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Học lực: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                  child: TextField(
+                                                controller: _txtAcademicAbility,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  isDense: true, // Added this
+                                                  contentPadding:
+                                                      EdgeInsets.all(
+                                                          8), // Added this
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Hạnh kiểm: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtConduct,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "TK lớp 9: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtTKclass9,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Năm tốt nghiệp: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller:
+                                                      _txtGraduationyear,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Địa chỉ liên lạc: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller:
+                                                      _txtContactAddress,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Dân tộc: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtNation,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Tôn giáo: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtReligion,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Đối tượng: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtObject,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Khu vực: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtArea,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "CMND: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtCMND,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Nơi cấp: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtIssuedby,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Ngày cấp: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtDateRange,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Họ và tên Ba: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtFathername,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Họ và tên Mẹ: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                child: TextField(
+                                                  controller: _txtMothername,
+                                                  decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    isDense: true, // Added this
+                                                    contentPadding:
+                                                        EdgeInsets.all(
+                                                            8), // Added this
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Quê quán: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtProvince,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Địa chỉ thường trú: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtProfession,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Nghề đăng ký: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtNgheDk,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Lớp: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtClass,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "SĐT học sinh: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtNumberPhoneStudent,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "SĐT liên lạc: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtNumberPhone,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Trình độ: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtLevel,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Giấy CNTN tại trường: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtCertification,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Học lực: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                          child: TextField(
-                                        controller: _txtAcademicAbility,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          isDense: true, // Added this
-                                          contentPadding:
-                                              EdgeInsets.all(8), // Added this
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Hạnh kiểm: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtConduct,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "TK lớp 9: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtTKclass9,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Năm tốt nghiệp: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtGraduationyear,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Địa chỉ liên lạc: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtContactAddress,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Dân tộc: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtNation,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Tôn giáo: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtReligion,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Đối tượng: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtObject,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Khu vực: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtArea,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "CMND: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtCMND,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Nơi cấp: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtIssuedby,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Ngày cấp: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtDateRange,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Họ và tên Ba: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtFathername,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Họ và tên Mẹ: ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Container(
-                                        child: TextField(
-                                          controller: _txtMothername,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            isDense: true, // Added this
-                                            contentPadding:
-                                                EdgeInsets.all(8), // Added this
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ))
-                    ],
-                  ),
+                            ///////////------------------------------------
+                          ],
+                        ))
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

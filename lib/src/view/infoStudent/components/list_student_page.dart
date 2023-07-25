@@ -140,6 +140,11 @@ class _List_Student_pageState extends State<List_Student_page> {
                         DataCell(Text(e.sdtHocSinh)),
                         DataCell(IconButton(
                             onPressed: () {
+                              // showDialog(
+                              //     context: context,
+                              //     builder: (BuildContext co) {
+                              //       return Detail_Student_page(id: e.id);
+                              //     });
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

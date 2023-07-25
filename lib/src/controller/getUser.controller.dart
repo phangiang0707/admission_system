@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../model/getListPayments.model.dart';
+import '../model/getUser.model.dart';
 import '../model/sponsorModel.dart';
 import '../utils/url.dart';
 import 'package:http/http.dart' as http;
 
-class PaymentsController {
+class GetUserController {
   final BuildContext context;
   SponsorModel? model;
-  PaymentsController({required this.context}) {
+  GetUserController({required this.context}) {
     model = Provider.of<SponsorModel>(context, listen: false);
   }
-  Future<List<GetPaymentsOtd>> getPayments(String trinhDo) async {
+  Future<Data?> getUser() async {
     final response = await http.get(
-      Uri.parse('${url}payments/items?type=${trinhDo}'),
+      Uri.parse('${url}users/me'),
       headers: {
+        "Accept": "application/json",
         "Authorization": "Bearer ${model!.getLogin!.accessToken}",
       },
     );
     print(response.statusCode);
     print(response.body);
     if (response.statusCode == 200) {
-      return getPaymentsOtdFromJson(response.body);
+      return getUserOtdFromJson(response.body);
     } else {
-      return [];
+      return null;
     }
   }
 }
