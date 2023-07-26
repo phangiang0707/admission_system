@@ -71,7 +71,8 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                 children: [
                   Center(
                     child: Container(
-                      width: 700,
+                      width: 1300,
+                      color: Color.fromARGB(255, 0, 61, 110),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -81,12 +82,12 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                               },
                               icon: Icon(
                                 Icons.chevron_left_outlined,
-                                color: Color.fromARGB(255, 0, 61, 110),
+                                color: Colors.white,
                               )),
                           Text(
                             "Danh sách chứng nhận",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 0, 61, 110),
+                              color: Colors.white,
                               fontSize: 20,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w400,
@@ -157,21 +158,16 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                                     );
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(23, 161, 250, 1),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.white),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Color.fromRGBO(23, 161, 250, 1),
-                                        blurRadius: 1,
-                                        spreadRadius: 2)
-                                  ]),
-                              child: Text(
-                                "Xác nhận chứng nhận",
-                                style: TextStyle(color: Colors.white),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Xác nhận chứng nhận",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
                               ),
                             ),
                           )
