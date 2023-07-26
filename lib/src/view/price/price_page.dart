@@ -180,13 +180,21 @@ class _Price_pageState extends State<Price_page> {
                                                   .then((value) {
                                                 String id = value[0].id;
                                                 print(value.length);
-                                                if (value.isEmpty) {
-                                                  print(_createPaymentStudent
-                                                      .text
-                                                      .toString());
-                                                  _txtErrorMessage =
-                                                      "Không tìm thấy thông tin học sinh";
-                                                  setState(() {});
+                                                if (value.isEmpty ||
+                                                    value.length > 1) {
+                                                  Navigator.pop(context);
+                                                  final snackBar = SnackBar(
+                                                    content: const Text(
+                                                        'Tạo không thành công'),
+                                                    action: SnackBarAction(
+                                                      label: 'Undo',
+                                                      onPressed: () {
+                                                        // Some code to undo the change.
+                                                      },
+                                                    ),
+                                                  );
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(snackBar);
                                                 } else {
                                                   print(_createPaymentStudent
                                                       .text
