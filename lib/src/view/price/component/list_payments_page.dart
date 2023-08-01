@@ -28,6 +28,7 @@ class _List_Payments_pageState extends State<List_Payments_page> {
   PutPaymentStudentController? _putStudentController;
   PostDeliveryController? _postDeliveryController;
   String type = 'TRUC_TIEP';
+  bool check = false;
   List<Item1> items = [];
   @override
   void initState() {
@@ -371,8 +372,22 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                                               child: Text("Số tiền"),
                                             )),
                                             DataColumn(
-                                                label: Expanded(
-                                              child: Text(""),
+                                                label: Row(
+                                              children: [
+                                                Text("Chọn tất cả"),
+                                                Checkbox(
+                                                  value: check,
+                                                  onChanged: (value) {
+                                                    check = value!;
+                                                    _listPayments
+                                                        .forEach((element) {
+                                                      setState(() {
+                                                        element.checked = check;
+                                                      });
+                                                    });
+                                                  },
+                                                ),
+                                              ],
                                             ))
                                           ],
                                         rows: _listPayments
@@ -381,12 +396,12 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                                                   DataCell(Text(
                                                     e.name,
                                                     style:
-                                                        TextStyle(fontSize: 24),
+                                                        TextStyle(fontSize: 18),
                                                   )),
                                                   DataCell(Text(
                                                     e.price.toString(),
                                                     style:
-                                                        TextStyle(fontSize: 24),
+                                                        TextStyle(fontSize: 18),
                                                   )),
                                                   DataCell(Checkbox(
                                                     checkColor: Colors.white,

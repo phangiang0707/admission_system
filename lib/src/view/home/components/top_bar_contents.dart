@@ -17,9 +17,10 @@ class TopBarContents extends StatefulWidget {
 
 class _TopBarContentsState extends State<TopBarContents> {
   final List _isHovering = [false];
-
+  SponsorModel? model;
   @override
   Widget build(BuildContext context) {
+    model = Provider.of<SponsorModel>(context, listen: false);
     var screenSize = MediaQuery.of(context).size;
 
     return PreferredSize(
@@ -32,52 +33,84 @@ class _TopBarContentsState extends State<TopBarContents> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'HỆ THỐNG HỖ TRỢ NHẬP HỌC',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 0, 61, 110),
-                  fontSize: 20,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 3,
-                ),
-              ),
-              InkWell(
-                onHover: (value) {
-                  setState(() {
-                    value ? _isHovering[0] = true : _isHovering[0] = false;
-                  });
-                },
-                onTap: () {
-                  Provider.of<SponsorModel>(context, listen: false)
-                      .getLogin
-                      .isNull;
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Login_page()));
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+              Container(
+                child: Row(
                   children: [
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Container(
+                        width: 150,
+                        height: 150,
+                        child: Image.asset(
+                          "assets/logo.png",
+                          fit: BoxFit.cover,
+                        )),
+                    SizedBox(
+                      width: 50,
+                    ),
                     Text(
-                      'Logout',
+                      'HỆ THỐNG HỖ TRỢ NHẬP HỌC',
                       style: TextStyle(
-                        color: _isHovering[0]
-                            ? Colors.black
-                            : Color.fromARGB(255, 0, 61, 110),
+                        color: Color.fromARGB(255, 0, 61, 110),
+                        fontSize: 20,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 3,
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Visibility(
-                      maintainAnimation: true,
-                      maintainState: true,
-                      maintainSize: true,
-                      visible: _isHovering[0],
-                      child: Container(
-                        height: 2,
-                        width: 20,
-                        color: Colors.black,
+                  ],
+                ),
+              ),
+              Container(
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.people,
+                      size: 24,
+                      color: Color.fromARGB(255, 0, 61, 110),
+                    ),
+                    Text(
+                      model!.getUser!.fullname,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("-"),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(model!.getUser!.roles[1]),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    InkWell(
+                      onHover: (value) {
+                        setState(() {
+                          value
+                              ? _isHovering[0] = true
+                              : _isHovering[0] = false;
+                        });
+                      },
+                      onTap: () {
+                        Provider.of<SponsorModel>(context, listen: false)
+                            .getLogin
+                            .isNull;
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Login_page()));
+                      },
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: _isHovering[0]
+                              ? Colors.black
+                              : Color.fromARGB(255, 0, 61, 110),
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

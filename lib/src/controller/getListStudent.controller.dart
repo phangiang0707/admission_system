@@ -28,4 +28,20 @@ class StudentController {
       return null;
     }
   }
+
+  Future<List<GetStudentOtd>?> getStudentSort(String sort) async {
+    final response = await http.get(
+      Uri.parse('${url}students?type=${sort}'),
+      headers: {
+        "Authorization": "Bearer ${model!.getLogin!.accessToken}",
+      },
+    );
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      return getStudentOtdFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
 }

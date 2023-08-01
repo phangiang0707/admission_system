@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controller/getUser.controller.dart';
 import '../../controller/postLogin.controller.dart';
+import '../../utils/url.dart';
+import 'package:http/http.dart' as http;
 
 class Login_page extends StatefulWidget {
   const Login_page({super.key});
@@ -19,6 +21,7 @@ class _Login_pageState extends State<Login_page> {
   GetUserController? _getUserController;
   String errorEmail = '';
   String errorPass = '';
+  String _txtError = '';
   bool isEmail(String string) {
     // Null or empty string is invalid
     if (string.isEmpty) {
@@ -51,13 +54,21 @@ class _Login_pageState extends State<Login_page> {
           padding: EdgeInsets.only(top: 100),
           child: Column(
             children: [
-              Text(
-                "Hệ thống hỗ trợ nhập học",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: Color.fromRGBO(23, 161, 250, 1)),
+              Container(
+                width: 200,
+                height: 200,
+                child: Image.asset(
+                  "assets/logo.png",
+                  fit: BoxFit.fill,
+                ),
               ),
+              // Text(
+              //   "Hệ thống hỗ trợ nhập học",
+              //   style: TextStyle(
+              //       fontSize: 24,
+              //       fontWeight: FontWeight.w700,
+              //       color: Color.fromRGBO(23, 161, 250, 1)),
+              // ),
               SizedBox(
                 height: 100,
               ),
@@ -122,6 +133,10 @@ class _Login_pageState extends State<Login_page> {
                           hintText: "Password",
                           errorText: errorPass.isEmpty ? null : errorPass),
                     ),
+                    Text(
+                      _txtError,
+                      style: TextStyle(color: Colors.red),
+                    )
                   ],
                 ),
               ),
@@ -129,15 +144,21 @@ class _Login_pageState extends State<Login_page> {
                 height: 20,
               ),
               InkWell(
-                onTap: () {
-                  // if (_txtPass.text == 'admin') {
-                  //   errorPass = "";
-                  //   setState(() {});
-                  // } else {
-                  //   errorPass = 'Mật khẩu không hợp lệ';
-                  //   setState(() {});
-                  // }
-
+                onTap: () async {
+                  var response = await http.post(Uri.parse('${url}auth/login'),
+                      body: {
+                        "email": _txtEmail.text,
+                        "password": _txtPass.text
+                      });
+                  if (response.statusCode != 201) {
+                    setState(() {
+                      _txtError = "Email hoặc mật khẩu không hợp lệ";
+                    });
+                  } else {
+                    setState(() {
+                      _txtError = "";
+                    });
+                  }
                   if (isEmail(_txtEmail.text)) {
                     errorEmail = "";
                     setState(() {});

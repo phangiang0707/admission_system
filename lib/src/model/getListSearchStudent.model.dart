@@ -1,17 +1,17 @@
 // To parse this JSON data, do
 //
-//     final getStudentOtd = getStudentOtdFromJson(jsonString);
+//     final getListSearchStudentOtd = getListSearchStudentOtdFromJson(jsonString);
 
 import 'dart:convert';
 
-List<GetStudentOtd> getStudentOtdFromJson(String str) =>
-    List<GetStudentOtd>.from(
-        json.decode(str).map((x) => GetStudentOtd.fromJson(x)));
+List<GetListSearchStudentOtd> getListSearchStudentOtdFromJson(String str) =>
+    List<GetListSearchStudentOtd>.from(
+        json.decode(str).map((x) => GetListSearchStudentOtd.fromJson(x)));
 
-String getStudentOtdToJson(List<GetStudentOtd> data) =>
+String getListSearchStudentOtdToJson(List<GetListSearchStudentOtd> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class GetStudentOtd {
+class GetListSearchStudentOtd {
   String maHocSinh;
   String hoVaTenDem;
   String ten;
@@ -19,10 +19,10 @@ class GetStudentOtd {
   String giayCntnTruong;
   String cccd;
   DateTime createdAt;
-  String hoTen;
   String id;
+  bool hasPayment;
 
-  GetStudentOtd({
+  GetListSearchStudentOtd({
     required this.maHocSinh,
     required this.hoVaTenDem,
     required this.ten,
@@ -30,11 +30,12 @@ class GetStudentOtd {
     required this.giayCntnTruong,
     required this.cccd,
     required this.createdAt,
-    required this.hoTen,
     required this.id,
+    required this.hasPayment,
   });
 
-  factory GetStudentOtd.fromJson(Map<String, dynamic> json) => GetStudentOtd(
+  factory GetListSearchStudentOtd.fromJson(Map<String, dynamic> json) =>
+      GetListSearchStudentOtd(
         maHocSinh: json["ma_hoc_sinh"],
         hoVaTenDem: json["ho_va_ten_dem"],
         ten: json["ten"],
@@ -42,8 +43,8 @@ class GetStudentOtd {
         giayCntnTruong: json["giay_cntn_truong"],
         cccd: json["cccd"],
         createdAt: DateTime.parse(json["createdAt"]),
-        hoTen: json["ho_ten"],
         id: json["id"],
+        hasPayment: json["hasPayment"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,7 +55,7 @@ class GetStudentOtd {
         "giay_cntn_truong": giayCntnTruong,
         "cccd": cccd,
         "createdAt": createdAt.toIso8601String(),
-        "ho_ten": hoTen,
         "id": id,
+        "hasPayment": hasPayment,
       };
 }

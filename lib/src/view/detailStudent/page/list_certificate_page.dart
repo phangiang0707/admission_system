@@ -21,7 +21,7 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
   PostCertificateController? _postCertificateController;
   PostConfirmController? _postConfirmController;
   List<ChungChi> _listOfChungChi = [];
-  List<detailCertificate> _listOfDetailCertificates = [];
+  bool check = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -85,7 +85,7 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                                 color: Colors.white,
                               )),
                           Text(
-                            "Danh sách chứng nhận",
+                            "Danh sách hồ sơ",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -96,28 +96,74 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                           ),
                           InkWell(
                             onTap: () {
-                              for (int i = 0;
-                                  i < _listOfCertificates.length;
-                                  i++) {
-                                if (_listOfCertificates[i].checked == true) {
-                                  _listOfChungChi.add(ChungChi(
-                                      id: _listOfCertificates[i].id,
-                                      checked: _listOfCertificates[i].checked));
-                                }
-                                if (i + 1 == _listOfCertificates.length) {
-                                  _postCertificateController!
-                                      .postCertificateController(
-                                          PostCertificateOtd(
-                                              studentId: widget.studentOtd!.id,
-                                              chungChi: _listOfChungChi));
-                                }
-                              }
-
                               // _postConfirmController!
                               //     .postConfirmController(widget.studentOtd!.id);
                               print(widget.studentOtd!.id);
                               widget.studentOtd!.daNhapHoc == true
-                                  ? Navigator.of(context).pop()
+                                  ? showDialog<void>(
+                                      context: context,
+                                      barrierDismissible:
+                                          false, // user must tap button!
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text(
+                                              'Xác nhận nộp hồ sơ thành công'),
+                                          actions: <Widget>[
+                                            InkWell(
+                                              onTap: () {
+                                                for (int i = 0;
+                                                    i <
+                                                        _listOfCertificates
+                                                            .length;
+                                                    i++) {
+                                                  if (_listOfCertificates[i]
+                                                          .checked ==
+                                                      true) {
+                                                    _listOfChungChi.add(ChungChi(
+                                                        id: _listOfCertificates[
+                                                                i]
+                                                            .id,
+                                                        checked:
+                                                            _listOfCertificates[
+                                                                    i]
+                                                                .checked));
+                                                  }
+                                                  if (i + 1 ==
+                                                      _listOfCertificates
+                                                          .length) {
+                                                    _postCertificateController!
+                                                        .postCertificateController(
+                                                            PostCertificateOtd(
+                                                                studentId: widget
+                                                                    .studentOtd!
+                                                                    .id,
+                                                                chungChi:
+                                                                    _listOfChungChi));
+                                                  }
+                                                }
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Color.fromRGBO(
+                                                        23, 161, 250, 1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5)),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                                child: Text(
+                                                  'Xác nhận',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    )
                                   : showDialog<void>(
                                       context: context,
                                       barrierDismissible:
@@ -161,7 +207,7 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "Xác nhận chứng nhận",
+                                    "Xác nhận hồ sơ",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   SizedBox(
@@ -187,18 +233,22 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                             children: [
                               Text(
                                 "Mã HSSV: ",
+                                style: TextStyle(fontSize: 20),
                               ),
                               Text(
                                 widget.studentOtd!.maHocSinh,
+                                style: TextStyle(fontSize: 20),
                               ),
                               SizedBox(
                                 width: 20,
                               ),
                               Text(
                                 "Tên HSSV: ",
+                                style: TextStyle(fontSize: 20),
                               ),
                               Text(
                                 widget.studentOtd!.hoTen,
+                                style: TextStyle(fontSize: 20),
                               ),
                             ],
                           ),
@@ -210,16 +260,53 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                                           label: Expanded(
                                         child: Text("Tên chứng chỉ"),
                                       )),
+                                      DataColumn(label: Text("Số lượng")),
                                       DataColumn(
                                           label: Expanded(
-                                        child: Text("Tình trạng"),
+                                        child: Row(
+                                          children: [
+                                            Text("Chọn tất cả"),
+                                            Checkbox(
+                                              value: check,
+                                              onChanged: (value) {
+                                                setState(() {});
+                                                check = value!;
+                                                _listOfCertificates
+                                                    .forEach((element) {
+                                                  setState(() {});
+                                                  element.checked = check;
+                                                });
+                                              },
+                                            )
+                                          ],
+                                        ),
                                       ))
                                     ],
                                   rows: _listOfCertificates
                                       .map((e) => DataRow(cells: <DataCell>[
                                             DataCell(Text(
                                               e.noiDung,
-                                              style: TextStyle(fontSize: 24),
+                                              style: TextStyle(fontSize: 18),
+                                            )),
+                                            DataCell(Row(
+                                              children: [
+                                                Text(
+                                                  e.soLuong.toString(),
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                                e.donVi.toString() == "DonVi.BN"
+                                                    ? Text(
+                                                        " bản",
+                                                        style: TextStyle(
+                                                            fontSize: 18),
+                                                      )
+                                                    : Text(
+                                                        " tấm",
+                                                        style: TextStyle(
+                                                            fontSize: 18),
+                                                      )
+                                              ],
                                             )),
                                             DataCell(Checkbox(
                                               checkColor: Colors.white,

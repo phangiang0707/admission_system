@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../../controller/getProvince.controller.dart';
 import '../../../controller/postStudent.controller.dart';
+import '../../../model/getProvince.model.dart';
 import '../../../model/postStudent.model.dart';
 
 class Add_Student_page extends StatefulWidget {
@@ -11,11 +13,20 @@ class Add_Student_page extends StatefulWidget {
 
 class _Add_Student_pageState extends State<Add_Student_page> {
   PostStudentController? _postStudentController;
+  GetProvinceController? _getProvinceController;
+  GetProvinceOtd? _getProvince;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     _postStudentController = PostStudentController(context: context);
+    _getProvinceController = GetProvinceController();
+    _getProvinceController!.getProvince().then((value) {
+      setState(() {
+        _getProvince = value;
+      });
+    });
   }
 
   TextEditingController _txtHo = TextEditingController();
@@ -72,7 +83,7 @@ class _Add_Student_pageState extends State<Add_Student_page> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  Navigator.pop(context, 'refresh');
                                 },
                                 icon: Icon(
                                   Icons.chevron_left_outlined,
@@ -123,9 +134,8 @@ class _Add_Student_pageState extends State<Add_Student_page> {
                                         hoTenCha: _txtHoTenBo.text,
                                         hoTenMe: _txtHoTenMe.text,
                                         ghiChu: ""))
-                                    .then((value) {
-                                  Navigator.pop(context, 'refresh');
-                                });
+                                    .then((value) {});
+                                Navigator.pop(context, 'refresh');
                               },
                               child: Container(
                                 child: Row(
@@ -363,6 +373,9 @@ class _Add_Student_pageState extends State<Add_Student_page> {
                                           ),
                                           Container(
                                               child: TextField(
+                                            onTap: () {
+                                              _dialogBuilderNoiSinh(context);
+                                            },
                                             controller: _txtNoiSinh,
                                             decoration: InputDecoration(
                                               border: OutlineInputBorder(),
@@ -395,6 +408,9 @@ class _Add_Student_pageState extends State<Add_Student_page> {
                                           ),
                                           Container(
                                               child: TextField(
+                                            onTap: () {
+                                              _dialogBuilderQueQuan(context);
+                                            },
                                             controller: _txtQueQuan,
                                             decoration: InputDecoration(
                                               border: OutlineInputBorder(),
@@ -563,6 +579,68 @@ class _Add_Student_pageState extends State<Add_Student_page> {
                                           ),
                                           Container(
                                               child: TextField(
+                                            onTap: () {
+                                              showDialog<void>(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: const Text(
+                                                        'Chọn trình độ'),
+                                                    content:
+                                                        SingleChildScrollView(
+                                                      child: Column(children: [
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _txtTrinhDo
+                                                                        .text =
+                                                                    "Trung cấp";
+                                                              });
+                                                            },
+                                                            child: Text(
+                                                              "Trung cấp",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            )),
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _txtTrinhDo
+                                                                        .text =
+                                                                    "Cao đẳng";
+                                                              });
+                                                            },
+                                                            child: Text(
+                                                              "Cao đẳng",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ))
+                                                      ]),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          textStyle:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelLarge,
+                                                        ),
+                                                        child: const Text(
+                                                            'Cancel'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            },
                                             controller: _txtTrinhDo,
                                             decoration: InputDecoration(
                                               border: OutlineInputBorder(),
@@ -615,6 +693,82 @@ class _Add_Student_pageState extends State<Add_Student_page> {
                                           ),
                                           Container(
                                               child: TextField(
+                                            onTap: () {
+                                              showDialog<void>(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: const Text(
+                                                        'Chọn học lực'),
+                                                    content:
+                                                        SingleChildScrollView(
+                                                      child: Column(children: [
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _txtHocLuc
+                                                                        .text =
+                                                                    "Giỏi";
+                                                              });
+                                                            },
+                                                            child: Text(
+                                                              "Giỏi",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            )),
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _txtHocLuc
+                                                                        .text =
+                                                                    "Khá";
+                                                              });
+                                                            },
+                                                            child: Text(
+                                                              "Khá",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            )),
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                _txtHocLuc
+                                                                        .text =
+                                                                    "Trung bình";
+                                                              });
+                                                            },
+                                                            child: Text(
+                                                              "Trung bình",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ))
+                                                      ]),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          textStyle:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelLarge,
+                                                        ),
+                                                        child: const Text(
+                                                            'Cancel'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            },
                                             controller: _txtHocLuc,
                                             decoration: InputDecoration(
                                               border: OutlineInputBorder(),
@@ -647,6 +801,98 @@ class _Add_Student_pageState extends State<Add_Student_page> {
                                           ),
                                           Container(
                                             child: TextField(
+                                              onTap: () {
+                                                showDialog<void>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          'Chọn hạnh kiểm'),
+                                                      content:
+                                                          SingleChildScrollView(
+                                                        child:
+                                                            Column(children: [
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  _txtHanhKiem
+                                                                          .text =
+                                                                      "Tổt";
+                                                                });
+                                                              },
+                                                              child: Text(
+                                                                "Tổt",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black),
+                                                              )),
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  _txtHanhKiem
+                                                                          .text =
+                                                                      "Khá";
+                                                                });
+                                                              },
+                                                              child: Text(
+                                                                "Khá",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black),
+                                                              )),
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  _txtHanhKiem
+                                                                          .text =
+                                                                      "Trung bình";
+                                                                });
+                                                              },
+                                                              child: Text(
+                                                                "Trung bình",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black),
+                                                              )),
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  _txtHanhKiem
+                                                                          .text =
+                                                                      "Yếu";
+                                                                });
+                                                              },
+                                                              child: Text(
+                                                                "Yếu",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black),
+                                                              ))
+                                                        ]),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          style: TextButton
+                                                              .styleFrom(
+                                                            textStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelLarge,
+                                                          ),
+                                                          child: const Text(
+                                                              'Cancel'),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
                                               controller: _txtHanhKiem,
                                               decoration: InputDecoration(
                                                 border: OutlineInputBorder(),
@@ -1042,6 +1288,84 @@ class _Add_Student_pageState extends State<Add_Student_page> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _dialogBuilderQueQuan(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Chọn quê quán'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: _getProvince!.data.data
+                  .map((e) => TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _txtQueQuan.text = e.name;
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "${e.name}",
+                        style: TextStyle(color: Colors.black),
+                      )))
+                  .toList(),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _dialogBuilderNoiSinh(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Chọn nơi sinh'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: _getProvince!.data.data
+                  .map((e) => TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _txtNoiCap.text = e.name;
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "${e.name}",
+                        style: TextStyle(color: Colors.black),
+                      )))
+                  .toList(),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
