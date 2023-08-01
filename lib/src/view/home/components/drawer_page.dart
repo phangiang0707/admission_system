@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../infoStudent/info_student_page.dart';
 import '../../price/price_page.dart';
 import '../../report/report_page.dart';
-import '../../uniform/uniform_page.dart';
 
 class Drawar_page extends StatefulWidget {
   const Drawar_page({super.key});
