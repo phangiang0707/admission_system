@@ -5,6 +5,7 @@ import '../../../controller/getListPayments.controller.dart';
 import '../../../controller/getPaymentStudent.controller.dart';
 import '../../../controller/postDelivery.controller.dart';
 import '../../../controller/putPaymentStudent.controller.dart';
+import '../../../controller/writeMoney.controller.dart';
 import '../../../model/getDetailStudent.model.dart';
 import '../../../model/getListPayments.model.dart';
 import '../../../model/getPaymentStudent.model.dart';
@@ -30,6 +31,8 @@ class _List_Payments_pageState extends State<List_Payments_page> {
   String type = 'TRUC_TIEP';
   bool check = false;
   List<Item1> items = [];
+  int total = 0;
+  String title = '';
   @override
   void initState() {
     // TODO: implement initState
@@ -59,6 +62,7 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                       y: j + 1,
                       id: _getPaymentsOtd![i].id,
                       name: _getPaymentsOtd![i].name,
+                      delivered: _getStudentOtd!.items[j].checked,
                       checked: _getStudentOtd!.items[j].checked,
                       quantiy: _getPaymentsOtd![i].quantity,
                       type: _getPaymentsOtd![i].type,
@@ -68,6 +72,13 @@ class _List_Payments_pageState extends State<List_Payments_page> {
               }
             }
           }
+          _listPayments.forEach((element) {
+            if (element.checked == true) {
+              setState(() {
+                total += element.price;
+              });
+            }
+          });
         } else {
           for (int j = 0; j < _getStudentOtd!.items.length; j++) {
             for (int i = 0; i < _getPaymentsOtd!.length; i++) {
@@ -76,12 +87,14 @@ class _List_Payments_pageState extends State<List_Payments_page> {
               print(
                   "--------------------------------------------${_getPaymentsOtd![i].id}------------------------------------");
               if (_getStudentOtd!.items[j].id == _getPaymentsOtd![i].id) {
-                if (_getStudentOtd!.items[j].delivered == false) {
+                if (_getStudentOtd!.items[j].delivered == false &&
+                    _getStudentOtd!.items[j].checked == true) {
                   setState(() {
                     _listPayments.add(listPayment(
                         y: j + 1,
                         id: _getPaymentsOtd![i].id,
                         name: _getPaymentsOtd![i].name,
+                        delivered: _getStudentOtd!.items[j].checked,
                         checked: _getStudentOtd!.items[j].delivered,
                         quantiy: _getPaymentsOtd![i].quantity,
                         type: _getPaymentsOtd![i].type,
@@ -91,6 +104,11 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                 }
               }
             }
+          }
+          if (_listPayments.length == 0) {
+            title = "Học sinh đã nhận đồng phục";
+          } else {
+            title = "";
           }
         }
 
@@ -108,10 +126,11 @@ class _List_Payments_pageState extends State<List_Payments_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _getPaymentsOtd == []
+      body: _getPaymentsOtd == [] && _listPayments == []
           ? CircularProgressIndicator()
           : SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     // // height: double.infinity,
@@ -185,91 +204,193 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                                       SizedBox(
                                         width: 20,
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          if (widget.checkRole ==
-                                              "price_page") {
-                                            for (int i = 0;
-                                                i < _listPayments.length;
-                                                i++) {
-                                              if (_listPayments[i].checked ==
-                                                  true) {
-                                                items.add(Item1(
-                                                    id: _listPayments[i].id,
-                                                    checked: true));
-                                                print(
-                                                    "-----${_getStudentOtd!.id}------${_listPayments[i].id}--------$type");
-                                              }
-                                              ;
-                                              if (i + 1 ==
-                                                  _listPayments.length) {
-                                                _putStudentController!
-                                                    .putPaymentStudentController(
-                                                        _getStudentOtd!.id,
-                                                        PutPaymentStudentOtd(
-                                                            items: items,
-                                                            type: type,
-                                                            note: "note"))
-                                                    .then((value) {
-                                                  // Navigator.pop(context);
-                                                });
-                                                final snackBar = SnackBar(
-                                                  content: const Text(
-                                                      'Xác nhận thành công'),
-                                                  action: SnackBarAction(
-                                                    label: 'Undo',
-                                                    onPressed: () {
-                                                      // Some code to undo the change.
-                                                    },
+                                      widget.checkRole == "price_page"
+                                          ? _getStudentOtd!.debt == 0
+                                              ? Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    border: Border.all(
+                                                        color: Colors.white),
                                                   ),
-                                                );
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(snackBar);
-                                              }
-                                            }
-                                          } else {
-                                            for (int i = 0;
-                                                i < _listPayments.length;
-                                                i++) {
-                                              if (_listPayments[i].checked ==
-                                                  true) {
-                                                print(
-                                                    "-----${_getStudentOtd!.id}------${_listPayments[i].id}--------$type");
-                                                _postDeliveryController!
-                                                    .postPDeliveryController(
-                                                        _getStudentOtd!.id,
-                                                        _listPayments[i].id);
-                                                Navigator.pop(context);
-                                              }
-                                            }
-                                          }
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 5),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border:
-                                                Border.all(color: Colors.white),
-                                          ),
-                                          child:
-                                              widget.checkRole == "price_page"
-                                                  ? Text(
-                                                      "Xác nhận học phí",
-                                                      style: TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255, 0, 61, 110)),
-                                                    )
-                                                  : Text(
-                                                      "Xác nhận đồng phục",
-                                                      style: TextStyle(
-                                                          color: Color.fromARGB(
-                                                              255, 0, 61, 110)),
-                                                    ),
-                                        ),
-                                      ),
+                                                  child: Text(
+                                                    "Học sinh đã đóng tất cả học phí",
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 0, 61, 110)),
+                                                  ))
+                                              : InkWell(
+                                                  onTap: () {
+                                                    for (int i = 0;
+                                                        i <
+                                                            _listPayments
+                                                                .length;
+                                                        i++) {
+                                                      if (_listPayments[i]
+                                                              .checked ==
+                                                          true) {
+                                                        items.add(Item1(
+                                                            id: _listPayments[i]
+                                                                .id,
+                                                            checked: true));
+                                                        print(
+                                                            "-----${_getStudentOtd!.id}------${_listPayments[i].id}--------$type");
+                                                      }
+                                                      ;
+                                                      if (i + 1 ==
+                                                          _listPayments
+                                                              .length) {
+                                                        _putStudentController!
+                                                            .putPaymentStudentController(
+                                                                _getStudentOtd!
+                                                                    .id,
+                                                                PutPaymentStudentOtd(
+                                                                    items:
+                                                                        items,
+                                                                    type: type,
+                                                                    note:
+                                                                        "note"))
+                                                            .then((value) {});
+                                                        _dialogBuilder(context);
+                                                        final snackBar =
+                                                            SnackBar(
+                                                          content: const Text(
+                                                              'Xác nhận thành công'),
+                                                          action:
+                                                              SnackBarAction(
+                                                            label: 'Undo',
+                                                            onPressed: () {
+                                                              // Some code to undo the change.
+                                                            },
+                                                          ),
+                                                        );
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                                snackBar);
+                                                      }
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 10,
+                                                              vertical: 5),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        border: Border.all(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                      child: Text(
+                                                        "Xác nhận học phí",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    0,
+                                                                    61,
+                                                                    110)),
+                                                      )),
+                                                )
+                                          : InkWell(
+                                              onTap: () {
+                                                for (int i = 0;
+                                                    i < _listPayments.length;
+                                                    i++) {
+                                                  if (_listPayments[i]
+                                                          .checked ==
+                                                      true) {
+                                                    print(
+                                                        "-----${_getStudentOtd!.id}------${_listPayments[i].id}--------$type");
+                                                    _postDeliveryController!
+                                                        .postPDeliveryController(
+                                                            _getStudentOtd!.id,
+                                                            _listPayments[i]
+                                                                .id);
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          title: const Text(
+                                                              'Nhận đồng phục thành công bạn có muốn rời trang'),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              style: TextButton
+                                                                  .styleFrom(
+                                                                textStyle: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .labelLarge,
+                                                              ),
+                                                              child: const Text(
+                                                                  'Đóng'),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                            ),
+                                                            TextButton(
+                                                              style: TextButton
+                                                                  .styleFrom(
+                                                                textStyle: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .labelLarge,
+                                                              ),
+                                                              child: const Text(
+                                                                  'Rời trang'),
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    final snackBar = SnackBar(
+                                                      content: const Text(
+                                                          'Bạn chưa chọn đồng phục'),
+                                                    );
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(snackBar);
+                                                  }
+                                                }
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: Colors.white),
+                                                ),
+                                                child: Text(
+                                                  "Xác nhận đồng phục",
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 0, 61, 110)),
+                                                ),
+                                              ),
+                                            ),
                                       SizedBox(
                                         width: 5,
                                       )
@@ -365,24 +486,61 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                                         columns: [
                                             DataColumn(
                                                 label: Expanded(
-                                              child: Text("Học phí"),
+                                              child: Text(
+                                                "Học phí",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
                                             )),
                                             DataColumn(
                                                 label: Expanded(
-                                              child: Text("Số tiền"),
+                                              child: Text(
+                                                "Số tiền",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            )),
+                                            DataColumn(
+                                                label: Expanded(
+                                              child: Text(
+                                                "Tình trạng",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
                                             )),
                                             DataColumn(
                                                 label: Row(
                                               children: [
-                                                Text("Chọn tất cả"),
+                                                Text(
+                                                  "Chọn tất cả",
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
                                                 Checkbox(
                                                   value: check,
                                                   onChanged: (value) {
                                                     check = value!;
+                                                    setState(() {
+                                                      total = 0;
+                                                    });
                                                     _listPayments
                                                         .forEach((element) {
                                                       setState(() {
                                                         element.checked = check;
+                                                        if (check == true) {
+                                                          total +=
+                                                              element.price;
+                                                        } else {
+                                                          total = 0;
+                                                        }
                                                       });
                                                     });
                                                   },
@@ -399,16 +557,33 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                                                         TextStyle(fontSize: 18),
                                                   )),
                                                   DataCell(Text(
-                                                    e.price.toString(),
+                                                    WriteMoney().writedMoney(
+                                                        e.price.toString()),
                                                     style:
                                                         TextStyle(fontSize: 18),
                                                   )),
+                                                  DataCell(e.delivered == false
+                                                      ? Text(
+                                                          "Chưa đóng tiền",
+                                                          style: TextStyle(
+                                                              fontSize: 18),
+                                                        )
+                                                      : Text(
+                                                          "Đã đóng tiền",
+                                                          style: TextStyle(
+                                                              fontSize: 18),
+                                                        )),
                                                   DataCell(Checkbox(
                                                     checkColor: Colors.white,
                                                     //fillColor: MaterialStateProperty.resolveWith(getColor),
                                                     value: e.checked,
                                                     onChanged: (bool? value) {
                                                       setState(() {
+                                                        if (e.checked == true) {
+                                                          total -= e.price;
+                                                        } else {
+                                                          total += e.price;
+                                                        }
                                                         e.checked = value!;
                                                       });
                                                       print(
@@ -416,7 +591,89 @@ class _List_Payments_pageState extends State<List_Payments_page> {
                                                     },
                                                   )),
                                                 ]))
-                                            .toList())
+                                            .toList()),
+                                Text(
+                                  title,
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.blue),
+                                ),
+                                widget.checkRole == "price_page"
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Học sinh đã thanh toán: ",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          _getStudentOtd!.total == 0
+                                              ? Text(
+                                                  "0 VNĐ",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                )
+                                              : Text(
+                                                  "${WriteMoney().writedMoney(_getStudentOtd!.total.toString())}",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                            "Học sinh còn nợ: ",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          _getStudentOtd!.debt == 0
+                                              ? Text(
+                                                  "0 VNĐ",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                )
+                                              : Text(
+                                                  "${WriteMoney().writedMoney(_getStudentOtd!.debt.toString())} ",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                            "Học sinh cần đóng thêm: ",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          total - _getStudentOtd!.total == 0
+                                              ? Text(
+                                                  "0 VNĐ",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                )
+                                              : Text(
+                                                  "${WriteMoney().writedMoney((total - _getStudentOtd!.total).toString())} ",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                        ],
+                                      )
+                                    : SizedBox(),
                               ],
                             ),
                           ),
@@ -429,12 +686,64 @@ class _List_Payments_pageState extends State<List_Payments_page> {
             ),
     );
   }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+              'Xác nhận thành toán thành công bạn có muốn in hóa đơn'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Ở lại'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Về trang trước'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('In'),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Print_Payments_page(
+                      listPayments: _listPayments,
+                      studentOtd: widget.studentOtd,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 class listPayment {
   int y;
   String id;
   String name;
+  bool delivered;
   bool checked;
   String quantiy;
   String type;
@@ -444,6 +753,7 @@ class listPayment {
       {required this.y,
       required this.id,
       required this.name,
+      required this.delivered,
       required this.checked,
       required this.quantiy,
       required this.type,

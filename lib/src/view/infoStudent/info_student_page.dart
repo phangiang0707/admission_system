@@ -88,6 +88,10 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                                 DropdownMenuItem(
                                   child: Text("Cao đẳng"),
                                   value: "CAO_DANG",
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("Liên thông CĐ"),
+                                  value: "LT_CAO_DANG",
                                 )
                               ],
                               onChanged: (value) {
@@ -206,7 +210,9 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                                           child: Text(
                                             'Mã học sinh',
                                             style: TextStyle(
-                                                fontStyle: FontStyle.italic),
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       ),
@@ -215,7 +221,9 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                                           child: Text(
                                             'Họ và Tên',
                                             style: TextStyle(
-                                                fontStyle: FontStyle.italic),
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       ),
@@ -224,7 +232,9 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                                           child: Text(
                                             'CCCD',
                                             style: TextStyle(
-                                                fontStyle: FontStyle.italic),
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       ),
@@ -233,7 +243,9 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                                           child: Text(
                                             'Số điện thoại',
                                             style: TextStyle(
-                                                fontStyle: FontStyle.italic),
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       ),
@@ -242,7 +254,9 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                                           child: Text(
                                             'Giấy CNTN Trường',
                                             style: TextStyle(
-                                                fontStyle: FontStyle.italic),
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       ),
@@ -251,7 +265,9 @@ class _Info_Student_pageState extends State<Info_Student_page> {
                                           child: Text(
                                             'Ngày đăng ký',
                                             style: TextStyle(
-                                                fontStyle: FontStyle.italic),
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       ),
@@ -338,4 +354,27 @@ class _Info_Student_pageState extends State<Info_Student_page> {
       },
     );
   }
+
+  // Future<void> _dialogBuilderQueQuan(BuildContext context) {
+  //   return showDialog<void>(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('Chọn quê quán'),
+  //         content: SingleChildScrollView(),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             style: TextButton.styleFrom(
+  //               textStyle: Theme.of(context).textTheme.labelLarge,
+  //             ),
+  //             child: const Text('Cancel'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }

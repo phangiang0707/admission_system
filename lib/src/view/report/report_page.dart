@@ -152,7 +152,8 @@ class _Report_pageState extends State<Report_page> {
                       primaryXAxis: CategoryAxis(),
                       // Chart title
                       title: ChartTitle(
-                          text: 'Báo cáo số lượng sinh viên theo $text'),
+                          text:
+                              'Báo cáo số lượng học sinh nhập học theo $text'),
                       // Enable legend
                       legend: Legend(isVisible: true),
                       // Enable tooltip

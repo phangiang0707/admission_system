@@ -26,7 +26,9 @@ class _TopBarContentsState extends State<TopBarContents> {
     return PreferredSize(
       preferredSize: Size(screenSize.width, 1000),
       child: Container(
-        color: Theme.of(context).bottomAppBarColor.withOpacity(widget.opacity),
+        decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.black)),
+            color: Color.fromARGB(255, 0, 61, 110)),
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Row(
@@ -52,10 +54,10 @@ class _TopBarContentsState extends State<TopBarContents> {
                     Text(
                       'HỆ THỐNG HỖ TRỢ NHẬP HỌC',
                       style: TextStyle(
-                        color: Color.fromARGB(255, 0, 61, 110),
+                        color: Colors.white,
                         fontSize: 20,
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w700,
                         letterSpacing: 3,
                       ),
                     ),
@@ -68,20 +70,35 @@ class _TopBarContentsState extends State<TopBarContents> {
                     Icon(
                       Icons.people,
                       size: 24,
-                      color: Color.fromARGB(255, 0, 61, 110),
+                      color: Colors.white,
                     ),
                     Text(
                       model!.getUser!.fullname,
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
-                    Text("-"),
+                    Text(
+                      "-",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
                     SizedBox(
                       width: 10,
                     ),
-                    Text(model!.getUser!.roles[1]),
+                    Text(
+                      model!.getUser!.roles[1],
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
                     SizedBox(
                       width: 10,
                     ),
@@ -106,8 +123,8 @@ class _TopBarContentsState extends State<TopBarContents> {
                         'Logout',
                         style: TextStyle(
                           color: _isHovering[0]
-                              ? Colors.black
-                              : Color.fromARGB(255, 0, 61, 110),
+                              ? const Color.fromARGB(255, 224, 224, 224)
+                              : Colors.white,
                         ),
                       ),
                     ),

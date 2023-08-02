@@ -43,6 +43,23 @@ class _Home_pageState extends State<Home_page> {
 
   @override
   void initState() {
+    if (Provider.of<SponsorModel>(context, listen: false).getUser!.roles[1] ==
+        "ROLE_PDT") {
+      setState(() {});
+      isChoice = 0;
+    } else if (Provider.of<SponsorModel>(context, listen: false)
+            .getUser!
+            .roles[1] ==
+        "ROLE_PKT") {
+      setState(() {});
+      isChoice = 1;
+    } else if (Provider.of<SponsorModel>(context, listen: false)
+            .getUser!
+            .roles[1] ==
+        "ROLE_PCTSV") {
+      setState(() {});
+      isChoice = 2;
+    }
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     model = Provider.of<SponsorModel>(context, listen: false);
@@ -157,64 +174,74 @@ class _Home_pageState extends State<Home_page> {
                                   .getUser!
                                   .roles[1] ==
                               "ROLE_PKT"
-                      ? InkWell(
-                          onHover: (value) {
-                            setState(() {
-                              value
-                                  ? _isHovering[1] = true
-                                  : _isHovering[1] = false;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              isChoice = 1;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ? Container(
+                          child: Column(
                             children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(vertical: 10),
+                              InkWell(
+                                onHover: (value) {
+                                  setState(() {
+                                    value
+                                        ? _isHovering[1] = true
+                                        : _isHovering[1] = false;
+                                  });
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    isChoice = 1;
+                                  });
+                                },
                                 child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Icon(
-                                      Icons.price_check,
-                                      color: Color.fromARGB(255, 0, 61, 110),
-                                      size: 24,
+                                    Container(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.price_check,
+                                            color:
+                                                Color.fromARGB(255, 0, 61, 110),
+                                            size: 24,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            'Học phí',
+                                            style: TextStyle(
+                                              color: _isHovering[1]
+                                                  ? Color.fromARGB(
+                                                      255, 0, 61, 110)
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Học phí',
-                                      style: TextStyle(
-                                        color: _isHovering[1]
-                                            ? Color.fromARGB(255, 0, 61, 110)
-                                            : Colors.black,
+                                    SizedBox(height: 5),
+                                    Visibility(
+                                      maintainAnimation: true,
+                                      maintainState: true,
+                                      maintainSize: true,
+                                      visible: _isHovering[1],
+                                      child: Container(
+                                        height: 20,
+                                        width: 2,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 5),
-                              Visibility(
-                                maintainAnimation: true,
-                                maintainState: true,
-                                maintainSize: true,
-                                visible: _isHovering[1],
-                                child: Container(
-                                  height: 20,
-                                  width: 2,
-                                  color: Colors.black,
-                                ),
+                              SizedBox(
+                                height: 20,
                               ),
                             ],
                           ),
                         )
                       : SizedBox(),
-                  SizedBox(
-                    height: 20,
-                  ),
                   Provider.of<SponsorModel>(context, listen: false)
                                   .getUser!
                                   .roles[1] ==
@@ -223,178 +250,198 @@ class _Home_pageState extends State<Home_page> {
                                   .getUser!
                                   .roles[1] ==
                               "ROLE_PCTSV"
-                      ? InkWell(
-                          onHover: (value) {
-                            setState(() {
-                              value
-                                  ? _isHovering[2] = true
-                                  : _isHovering[2] = false;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              isChoice = 2;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ? Container(
+                          child: Column(
                             children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(vertical: 10),
+                              InkWell(
+                                onHover: (value) {
+                                  setState(() {
+                                    value
+                                        ? _isHovering[2] = true
+                                        : _isHovering[2] = false;
+                                  });
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    isChoice = 2;
+                                  });
+                                },
                                 child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Icon(
-                                      Icons.layers_outlined,
-                                      color: Color.fromARGB(255, 0, 61, 110),
-                                      size: 24,
+                                    Container(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.layers_outlined,
+                                            color:
+                                                Color.fromARGB(255, 0, 61, 110),
+                                            size: 24,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            'Đồng phục',
+                                            style: TextStyle(
+                                              color: _isHovering[2]
+                                                  ? Color.fromARGB(
+                                                      255, 0, 61, 110)
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Đồng phục',
-                                      style: TextStyle(
-                                        color: _isHovering[2]
-                                            ? Color.fromARGB(255, 0, 61, 110)
-                                            : Colors.black,
+                                    SizedBox(height: 5),
+                                    Visibility(
+                                      maintainAnimation: true,
+                                      maintainState: true,
+                                      maintainSize: true,
+                                      visible: _isHovering[2],
+                                      child: Container(
+                                        height: 20,
+                                        width: 2,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 5),
-                              Visibility(
-                                maintainAnimation: true,
-                                maintainState: true,
-                                maintainSize: true,
-                                visible: _isHovering[2],
-                                child: Container(
-                                  height: 20,
-                                  width: 2,
-                                  color: Colors.black,
-                                ),
+                              SizedBox(
+                                height: 20,
                               ),
                             ],
                           ),
                         )
                       : SizedBox(),
-                  SizedBox(
-                    height: 20,
-                  ),
                   Provider.of<SponsorModel>(context, listen: false)
                               .getUser!
                               .roles[1] ==
                           "ROLE_ADMIN"
-                      ? InkWell(
-                          onHover: (value) {
-                            setState(() {
-                              value
-                                  ? _isHovering[3] = true
-                                  : _isHovering[3] = false;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              isChoice = 3;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ? Container(
+                          child: Column(
                             children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(vertical: 10),
+                              InkWell(
+                                onHover: (value) {
+                                  setState(() {
+                                    value
+                                        ? _isHovering[3] = true
+                                        : _isHovering[3] = false;
+                                  });
+                                },
+                                onTap: () {
+                                  setState(() {
+                                    isChoice = 3;
+                                  });
+                                },
                                 child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Icon(
-                                      Icons.add_chart,
-                                      color: Color.fromARGB(255, 0, 61, 110),
-                                      size: 24,
+                                    Container(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.add_chart,
+                                            color:
+                                                Color.fromARGB(255, 0, 61, 110),
+                                            size: 24,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            'Báo cáo',
+                                            style: TextStyle(
+                                              color: _isHovering[3]
+                                                  ? Color.fromARGB(
+                                                      255, 0, 61, 110)
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Báo cáo',
-                                      style: TextStyle(
-                                        color: _isHovering[3]
-                                            ? Color.fromARGB(255, 0, 61, 110)
-                                            : Colors.black,
+                                    SizedBox(height: 5),
+                                    Visibility(
+                                      maintainAnimation: true,
+                                      maintainState: true,
+                                      maintainSize: true,
+                                      visible: _isHovering[3],
+                                      child: Container(
+                                        height: 20,
+                                        width: 2,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 5),
-                              Visibility(
-                                maintainAnimation: true,
-                                maintainState: true,
-                                maintainSize: true,
-                                visible: _isHovering[3],
-                                child: Container(
-                                  height: 20,
-                                  width: 2,
-                                  color: Colors.black,
-                                ),
+                              SizedBox(
+                                height: 20,
                               ),
                             ],
                           ),
                         )
                       : SizedBox(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  InkWell(
-                    onHover: (value) {
-                      setState(() {
-                        value ? _isHovering[4] = true : _isHovering[4] = false;
-                      });
-                    },
-                    onTap: () {
-                      setState(() {
-                        isChoice = 4;
-                      });
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.help,
-                                color: Color.fromARGB(255, 0, 61, 110),
-                                size: 24,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'Hỗ trợ',
-                                style: TextStyle(
-                                  color: _isHovering[4]
-                                      ? Color.fromARGB(255, 0, 61, 110)
-                                      : Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Visibility(
-                          maintainAnimation: true,
-                          maintainState: true,
-                          maintainSize: true,
-                          visible: _isHovering[4],
-                          child: Container(
-                            height: 20,
-                            width: 2,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // InkWell(
+                  //   onHover: (value) {
+                  //     setState(() {
+                  //       value ? _isHovering[4] = true : _isHovering[4] = false;
+                  //     });
+                  //   },
+                  //   onTap: () {
+                  //     setState(() {
+                  //       isChoice = 4;
+                  //     });
+                  //   },
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Container(
+                  //         padding: EdgeInsets.symmetric(vertical: 10),
+                  //         child: Row(
+                  //           children: [
+                  //             Icon(
+                  //               Icons.help,
+                  //               color: Color.fromARGB(255, 0, 61, 110),
+                  //               size: 24,
+                  //             ),
+                  //             SizedBox(
+                  //               width: 5,
+                  //             ),
+                  //             Text(
+                  //               'Hỗ trợ',
+                  //               style: TextStyle(
+                  //                 color: _isHovering[4]
+                  //                     ? Color.fromARGB(255, 0, 61, 110)
+                  //                     : Colors.black,
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //       SizedBox(height: 5),
+                  //       Visibility(
+                  //         maintainAnimation: true,
+                  //         maintainState: true,
+                  //         maintainSize: true,
+                  //         visible: _isHovering[4],
+                  //         child: Container(
+                  //           height: 20,
+                  //           width: 2,
+                  //           color: Colors.black,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             )
@@ -755,67 +802,67 @@ class _Home_pageState extends State<Home_page> {
                                 ),
                               )
                             : SizedBox(),
-                        InkWell(
-                          onHover: (value) {
-                            setState(() {
-                              value
-                                  ? _isHovering[4] = true
-                                  : _isHovering[4] = false;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              isChoice = 4;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.help,
-                                      color: Color.fromARGB(255, 0, 61, 110),
-                                      size: 24,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Hỗ trợ',
-                                      style: TextStyle(
-                                        fontWeight: isChoice == 4
-                                            ? FontWeight.bold
-                                            : null,
-                                        color: isChoice == 4
-                                            ? Color.fromARGB(255, 0, 61, 110)
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Visibility(
-                                maintainAnimation: true,
-                                maintainState: true,
-                                maintainSize: true,
-                                visible: _isHovering[4],
-                                child: Container(
-                                  height: 40,
-                                  width: 2,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
+                        // InkWell(
+                        //   onHover: (value) {
+                        //     setState(() {
+                        //       value
+                        //           ? _isHovering[4] = true
+                        //           : _isHovering[4] = false;
+                        //     });
+                        //   },
+                        //   onTap: () {
+                        //     setState(() {
+                        //       isChoice = 4;
+                        //     });
+                        //   },
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Container(
+                        //         padding: EdgeInsets.symmetric(vertical: 10),
+                        //         child: Row(
+                        //           children: [
+                        //             Icon(
+                        //               Icons.help,
+                        //               color: Color.fromARGB(255, 0, 61, 110),
+                        //               size: 24,
+                        //             ),
+                        //             SizedBox(
+                        //               width: 5,
+                        //             ),
+                        //             Text(
+                        //               'Hỗ trợ',
+                        //               style: TextStyle(
+                        //                 fontWeight: isChoice == 4
+                        //                     ? FontWeight.bold
+                        //                     : null,
+                        //                 color: isChoice == 4
+                        //                     ? Color.fromARGB(255, 0, 61, 110)
+                        //                     : Colors.black,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       SizedBox(height: 5),
+                        //       Visibility(
+                        //         maintainAnimation: true,
+                        //         maintainState: true,
+                        //         maintainSize: true,
+                        //         visible: _isHovering[4],
+                        //         child: Container(
+                        //           height: 40,
+                        //           width: 2,
+                        //           color: Colors.black,
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // )
                       ]),
                 ),
           SizedBox(
-            width: 10,
+            width: 30,
           ),
           Expanded(
               // flex: 7,

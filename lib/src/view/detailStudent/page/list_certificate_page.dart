@@ -1,3 +1,4 @@
+import 'package:admission_system/src/view/home/home_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../controller/getListCertificate.controller.dart';
@@ -96,6 +97,22 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                           ),
                           InkWell(
                             onTap: () {
+                              for (int i = 0;
+                                  i < _listOfCertificates.length;
+                                  i++) {
+                                if (_listOfCertificates[i].checked == true) {
+                                  _listOfChungChi.add(ChungChi(
+                                      id: _listOfCertificates[i].id,
+                                      checked: _listOfCertificates[i].checked));
+                                }
+                                if (i + 1 == _listOfCertificates.length) {
+                                  _postCertificateController!
+                                      .postCertificateController(
+                                          PostCertificateOtd(
+                                              studentId: widget.studentOtd!.id,
+                                              chungChi: _listOfChungChi));
+                                }
+                              }
                               // _postConfirmController!
                               //     .postConfirmController(widget.studentOtd!.id);
                               print(widget.studentOtd!.id);
@@ -107,41 +124,11 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: const Text(
-                                              'Xác nhận nộp hồ sơ thành công'),
+                                              'Xác nhận nộp hồ sơ thành công bạn có muốn quay lại trang thông tin sinh viên'),
                                           actions: <Widget>[
                                             InkWell(
                                               onTap: () {
-                                                for (int i = 0;
-                                                    i <
-                                                        _listOfCertificates
-                                                            .length;
-                                                    i++) {
-                                                  if (_listOfCertificates[i]
-                                                          .checked ==
-                                                      true) {
-                                                    _listOfChungChi.add(ChungChi(
-                                                        id: _listOfCertificates[
-                                                                i]
-                                                            .id,
-                                                        checked:
-                                                            _listOfCertificates[
-                                                                    i]
-                                                                .checked));
-                                                  }
-                                                  if (i + 1 ==
-                                                      _listOfCertificates
-                                                          .length) {
-                                                    _postCertificateController!
-                                                        .postCertificateController(
-                                                            PostCertificateOtd(
-                                                                studentId: widget
-                                                                    .studentOtd!
-                                                                    .id,
-                                                                chungChi:
-                                                                    _listOfChungChi));
-                                                  }
-                                                }
-                                                Navigator.of(context).pop();
+                                                Navigator.pop(context);
                                               },
                                               child: Container(
                                                 decoration: BoxDecoration(
@@ -154,7 +141,36 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                                                     horizontal: 10,
                                                     vertical: 5),
                                                 child: Text(
-                                                  'Xác nhận',
+                                                  'Ở lại',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.pushAndRemoveUntil<
+                                                    void>(
+                                                  context,
+                                                  MaterialPageRoute<void>(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          const Home_page()),
+                                                  ModalRoute.withName('/'),
+                                                );
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Color.fromRGBO(
+                                                        23, 161, 250, 1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5)),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                                child: Text(
+                                                  'Về trang thông tin sinh viên',
                                                   style: TextStyle(
                                                       color: Colors.white),
                                                 ),
@@ -258,14 +274,30 @@ class _List_Certificate_pageState extends State<List_Certificate_page> {
                                   columns: [
                                       DataColumn(
                                           label: Expanded(
-                                        child: Text("Tên chứng chỉ"),
+                                        child: Text(
+                                          "Tên chứng chỉ",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600),
+                                        ),
                                       )),
-                                      DataColumn(label: Text("Số lượng")),
+                                      DataColumn(
+                                          label: Text(
+                                        "Số lượng",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                      )),
                                       DataColumn(
                                           label: Expanded(
                                         child: Row(
                                           children: [
-                                            Text("Chọn tất cả"),
+                                            Text(
+                                              "Chọn tất cả",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
                                             Checkbox(
                                               value: check,
                                               onChanged: (value) {

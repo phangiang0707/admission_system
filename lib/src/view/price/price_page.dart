@@ -110,6 +110,17 @@ class _Price_pageState extends State<Price_page> {
                         Expanded(
                           flex: 5,
                           child: TextFormField(
+                            onFieldSubmitted: (value) {
+                              _searchStudent!
+                                  .searchStudent(_txtFind.text)
+                                  .then((value) {
+                                setState(() {
+                                  listSearchGetSearchStudent = value;
+                                  _listSearchGetSearchStudent =
+                                      listSearchGetSearchStudent;
+                                });
+                              });
+                            },
                             controller: _txtFind,
                             // onTap: () {
                             //   _refreshIndicatorKey.currentState?.show();
@@ -391,8 +402,10 @@ class _Price_pageState extends State<Price_page> {
                                 label: Expanded(
                                   child: Text(
                                     'Mã học sinh',
-                                    style:
-                                        TextStyle(fontStyle: FontStyle.italic),
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ),
@@ -400,8 +413,10 @@ class _Price_pageState extends State<Price_page> {
                                 label: Expanded(
                                   child: Text(
                                     'Họ và tên đệm',
-                                    style:
-                                        TextStyle(fontStyle: FontStyle.italic),
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ),
@@ -409,8 +424,10 @@ class _Price_pageState extends State<Price_page> {
                                 label: Expanded(
                                   child: Text(
                                     'Tên',
-                                    style:
-                                        TextStyle(fontStyle: FontStyle.italic),
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ),
@@ -418,8 +435,10 @@ class _Price_pageState extends State<Price_page> {
                                 label: Expanded(
                                   child: Text(
                                     'CCCD',
-                                    style:
-                                        TextStyle(fontStyle: FontStyle.italic),
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ),
@@ -427,8 +446,10 @@ class _Price_pageState extends State<Price_page> {
                                 label: Expanded(
                                   child: Text(
                                     'Giấy CNTN tại Trường',
-                                    style:
-                                        TextStyle(fontStyle: FontStyle.italic),
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ),
@@ -436,8 +457,10 @@ class _Price_pageState extends State<Price_page> {
                                 label: Expanded(
                                   child: Text(
                                     'Số điện thoại',
-                                    style:
-                                        TextStyle(fontStyle: FontStyle.italic),
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ),
@@ -445,8 +468,10 @@ class _Price_pageState extends State<Price_page> {
                                 label: Expanded(
                                   child: Text(
                                     'Ngày đăng ký',
-                                    style:
-                                        TextStyle(fontStyle: FontStyle.italic),
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ),
